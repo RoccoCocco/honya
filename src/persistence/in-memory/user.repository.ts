@@ -1,4 +1,4 @@
-import { IUserRepository, User } from '@/domain';
+import { IUserRepository, User } from '@/core';
 
 export class InMemoryUserRepository implements IUserRepository {
   private readonly memory = new Map<string, User>();

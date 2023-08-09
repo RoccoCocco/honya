@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IDataService, IBookRepository, IUserRepository } from '@/domain';
+import { IDataService, IBookRepository, IUserRepository } from '@/core';
 
 import { InMemoryBookRepository, InMemoryUserRepository } from './in-memory';
 

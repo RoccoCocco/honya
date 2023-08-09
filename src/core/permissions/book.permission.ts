@@ -1,5 +1,5 @@
-import { User, UserRoleEnum } from '../user';
-import { Book } from './book.model';
+import { Book, User, UserRoleEnum } from '../models';
+
 import { InsufficientPermission } from '../exceptions';
 
 const NOT_AN_OWNER_MESSAGE = 'Not an owner';

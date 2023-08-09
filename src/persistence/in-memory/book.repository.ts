@@ -1,4 +1,4 @@
-import { IBookRepository, Book } from '@/domain';
+import { IBookRepository, Book } from '@/core';
 
 export class InMemoryBookRepository implements IBookRepository {
   private readonly memory = new Map<string, Book>();

@@ -1,4 +1,4 @@
-import { User, UserRoleEnum, UserStatusEnum } from './user.model';
+import { User, UserRoleEnum, UserStatusEnum } from '../models';
 import { InsufficientPermission } from '../exceptions';
 
 export class UserPermission {
