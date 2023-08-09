@@ -13,6 +13,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
   ApiNoContentResponse,
+  ApiCreatedResponse,
 } from '@nestjs/swagger';
 import { BookDto, BookCreateDto, BookUpdateDto } from '@/core';
 import { BookService } from '@/usecase';
@@ -25,7 +26,7 @@ export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   @Post()
-  @ApiNoContentResponse()
+  @ApiCreatedResponse()
   async create(@Body() dto: BookCreateDto): Promise<void> {
     await this.bookService.create('unknown', dto);
   }

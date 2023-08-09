@@ -13,6 +13,7 @@ import {
   ApiOkResponse,
   ApiUnauthorizedResponse,
   ApiNoContentResponse,
+  ApiCreatedResponse,
 } from '@nestjs/swagger';
 import { UserDto, UserCreateDto, UserUpdateDto } from '@/core';
 import { UserService } from '@/usecase';
@@ -25,7 +26,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @ApiNoContentResponse()
+  @ApiCreatedResponse()
   async create(@Body() dto: UserCreateDto): Promise<void> {
     this.userService.create('unknown', dto);
   }
