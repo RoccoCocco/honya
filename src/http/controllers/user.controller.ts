@@ -28,13 +28,13 @@ export class UserController {
   @Post()
   @ApiCreatedResponse()
   async create(@Body() dto: UserCreateDto): Promise<void> {
-    this.userService.create('unknown', dto);
+    await this.userService.create('unknown', dto);
   }
 
   @Delete(':id')
   @ApiNoContentResponse()
   async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    this.userService.delete('unknown', id);
+    await this.userService.delete('unknown', id);
   }
 
   @Put(':id')
@@ -43,7 +43,7 @@ export class UserController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateDto: UserUpdateDto,
   ): Promise<void> {
-    this.userService.update('unknown', id, updateDto);
+    await this.userService.update('unknown', id, updateDto);
   }
 
   @Get(':id')
