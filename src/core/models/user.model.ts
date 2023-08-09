@@ -9,13 +9,13 @@ export enum UserStatusEnum {
 }
 
 export class User {
-  id: string;
+  id = '';
 
-  firstName: string;
+  firstName = '';
 
-  lastName: string;
+  lastName = '';
 
-  role: UserRoleEnum;
+  role: UserRoleEnum = UserRoleEnum.Author;
 
-  status: UserStatusEnum;
+  status: UserStatusEnum = UserStatusEnum.Active;
 }

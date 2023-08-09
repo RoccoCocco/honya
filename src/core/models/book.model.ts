@@ -1,9 +1,9 @@
 export class Book {
-  id: string;
+  id = '';
 
-  title: string;
+  title = '';
 
-  description: string;
+  description = '';
 
-  authorId: string;
+  authorId = '';
 }

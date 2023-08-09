@@ -1,4 +1,4 @@
-import { IBookRepository, Book } from '@/core';
+import { IBookRepository, Book, NotFoundException } from '@/core';
 
 export class InMemoryBookRepository implements IBookRepository {
   private readonly memory = new Map<string, Book>();
@@ -28,6 +28,12 @@ export class InMemoryBookRepository implements IBookRepository {
   }
 
   async getById(id: string): Promise<Book> {
-    return this.memory.get(id);
+    const book = this.memory.get(id);
+
+    if (book) {
+      return book;
+    }
+
+    throw new NotFoundException();
   }
 }

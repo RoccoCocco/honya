@@ -1,4 +1,4 @@
-import { IUserRepository, User } from '@/core';
+import { IUserRepository, User, NotFoundException } from '@/core';
 
 export class InMemoryUserRepository implements IUserRepository {
   private readonly memory = new Map<string, User>();
@@ -28,6 +28,12 @@ export class InMemoryUserRepository implements IUserRepository {
   }
 
   async getById(id: string): Promise<User> {
-    return this.memory.get(id);
+    const user = this.memory.get(id);
+
+    if (user) {
+      return user;
+    }
+
+    throw new NotFoundException();
   }
 }

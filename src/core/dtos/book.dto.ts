@@ -4,15 +4,15 @@ import { IsUUID, Length } from 'class-validator';
 export class BookDto {
   @ApiProperty()
   @IsUUID()
-  id: string;
+  id = '';
 
   @ApiProperty()
   @Length(5, 200)
-  title: string;
+  title = '';
 
   @ApiProperty()
   @IsUUID()
-  author: string;
+  author = '';
 }
 
 export class BookUpdateDto extends OmitType(BookDto, ['id'] as const) {}
