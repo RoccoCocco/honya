@@ -2,15 +2,12 @@ import { Module } from '@nestjs/common';
 import { DataService, PersistenceModule } from '@/persistence';
 import { BookService, UserService } from './services';
 
-import { Tokens } from './application.tokens';
+import { DATA_SERVICE } from './usecase.tokens';
 
 @Module({
   imports: [PersistenceModule],
   providers: [
-    {
-      provide: Tokens.DataService,
-      useExisting: DataService,
-    },
+    { provide: DATA_SERVICE, useExisting: DataService },
     BookService,
     UserService,
   ],

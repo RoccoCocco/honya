@@ -9,14 +9,14 @@ import {
 import { validateOrReject } from 'class-validator';
 import { BookFactory } from '../factories';
 
-import { Tokens } from '../application.tokens';
+import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()
 export class BookService {
   private readonly factory = new BookFactory();
 
   constructor(
-    @Inject(Tokens.DataService)
+    @Inject(DATA_SERVICE)
     private readonly dataService: IDataService,
   ) {}
 

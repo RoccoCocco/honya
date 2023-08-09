@@ -8,14 +8,14 @@ import {
 } from '@/core';
 import { validateOrReject } from 'class-validator';
 import { UserFactory } from '../factories';
-import { Tokens } from '../application.tokens';
+import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()
 export class UserService {
   private readonly factory = new UserFactory();
 
   constructor(
-    @Inject(Tokens.DataService)
+    @Inject(DATA_SERVICE)
     private readonly repository: IDataService,
   ) {}
 
