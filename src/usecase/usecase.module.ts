@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DataService, PersistenceModule } from '@/persistence';
-import { BookService } from './book';
-import { UserService } from './user';
+import { BookService, UserService } from './services';
+
 import { Tokens } from './application.tokens';
 
 @Module({
