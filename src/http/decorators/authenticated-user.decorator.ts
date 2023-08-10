@@ -1,16 +1,14 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { AuthenticatedUserDto } from '@/core';
 
-export const AuthenticatedUser = createParamDecorator(
-  (_: unknown, ctx: ExecutionContext) => {
-    const { user } = ctx
-      .switchToHttp()
-      .getRequest<{ user: AuthenticatedUserDto }>();
+export const validateUserFromRequest = (_: unknown, ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest<{ user: unknown }>();
 
-    if (user instanceof AuthenticatedUserDto) {
-      return user;
-    }
+  if (request.user instanceof AuthenticatedUserDto) {
+    return request.user;
+  }
 
-    throw new Error('AuthenticatedUserDto not defined');
-  },
-);
+  throw new Error('AuthenticatedUserDto not defined');
+};
+
+export const AuthenticatedUser = createParamDecorator(validateUserFromRequest);

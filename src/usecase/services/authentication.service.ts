@@ -30,14 +30,16 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const accessToken = await this.jwtService.signAsync({
+    const response = new AuthenticationSignInResponseDto();
+
+    response.accessToken = await this.jwtService.signAsync({
       id: user.id,
       role: user.role,
       username: user.username,
       status: user.status,
     });
 
-    return { accessToken };
+    return response;
   }
 
   async verify(token: string) {

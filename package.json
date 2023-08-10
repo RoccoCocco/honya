@@ -65,8 +65,8 @@
     "typescript": "^5.1.3"
   },
   "lint-staged": {
-    "*.ts": "format",
-    "*.ts": "lint"
+    "*.ts": "npm run format",
+    "*.ts": "npm run lint"
   },
   "jest": {
     "moduleNameMapper": {
@@ -89,7 +89,8 @@
       "node_modules",
       "index.ts",
       "main.ts",
-      ".module.ts"
+      ".module.ts",
+      "persistence/typeorm/migrations/*"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
