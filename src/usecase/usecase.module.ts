@@ -12,7 +12,7 @@ const services = [AuthenticationService, BookService, UserService] as const;
     JwtModule.register({
       global: true,
       secret: 'static-secret',
-      signOptions: { expiresIn: '120s' },
+      signOptions: { expiresIn: '300s' },
     }),
     PersistenceModule,
   ],

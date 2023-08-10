@@ -2,7 +2,7 @@ import { User, UserRoleEnum, UserStatusEnum } from '../models';
 import { InsufficientPermission } from '../exceptions';
 
 export class UserPermission {
-  constructor(private readonly requester: User) {}
+  constructor(private readonly requester: Partial<User>) {}
 
   canCreate(): void {
     if (this.isAdmin() === false) {

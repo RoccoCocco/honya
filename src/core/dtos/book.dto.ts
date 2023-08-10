@@ -1,24 +1,35 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsUUID, Length, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { Book } from '@/core';
 
-export class BookDto {
+export class BookDto implements Book {
   @ApiProperty()
   @IsUUID()
   id!: string;
 
   @ApiProperty()
-  @Length(5, 200)
+  @Length(5, 100)
   title!: string;
 
   @ApiProperty()
+  @Length(5, 300)
+  description!: string;
+
+  @ApiProperty()
   @IsUUID()
-  author!: string;
+  authorId!: string;
 }
 
-export class BookUpdateDto extends OmitType(BookDto, ['id'] as const) {}
+export class BookUpdateDto extends OmitType(BookDto, [
+  'id',
+  'authorId',
+] as const) {}
 
-export class BookCreateDto extends OmitType(BookDto, ['id'] as const) {}
+export class BookCreateDto extends OmitType(BookDto, [
+  'id',
+  'authorId',
+] as const) {}
 
 export class BookListDto {
   @ApiProperty({

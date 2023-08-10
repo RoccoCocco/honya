@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
+  AuthenticatedUserDto,
   IDataService,
   UserPermission,
   UserDto,
@@ -34,39 +35,31 @@ export class UserService {
     return this.dtoFactory.toDto(users);
   }
 
-  async create(requesterId: string, dto: UserCreateDto): Promise<void> {
+  async create(
+    requester: AuthenticatedUserDto,
+    dto: UserCreateDto,
+  ): Promise<void> {
     await validateOrReject(dto);
-
-    const requester = await this.repository.user.getById(requesterId);
-
     new UserPermission(requester).canCreate();
-
     const user = this.factory.create(dto);
     await this.repository.user.create(user);
   }
 
-  async delete(requesterId: string, id: string): Promise<void> {
+  async delete(requester: AuthenticatedUserDto, id: string): Promise<void> {
     const user = await this.repository.user.getById(id);
-    const requester = await this.repository.user.getById(requesterId);
-
     new UserPermission(requester).canDelete(user);
-
     await this.repository.user.delete(id);
   }
 
   async update(
-    requesterId: string,
+    requester: AuthenticatedUserDto,
     id: string,
     dto: UserUpdateDto,
   ): Promise<void> {
     dto = plainToClass(UserUpdateDto, dto);
     await validateOrReject(dto);
-
     const updateData = this.factory.update(dto);
-    const requester = await this.repository.user.getById(requesterId);
-
     new UserPermission(requester).canUpdate(id, updateData);
-
     await this.repository.user.update(id, updateData);
   }
 }

@@ -14,26 +14,37 @@ import {
   ApiNoContentResponse,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
-import { BookDto, BookCreateDto, BookUpdateDto } from '@/core';
+import {
+  AuthenticatedUserDto,
+  BookDto,
+  BookCreateDto,
+  BookUpdateDto,
+} from '@/core';
 import { BookService } from '@/usecase';
-import { UseUserAuthentication } from '../decorators';
+import { UseUserAuthentication, AuthenticatedUser } from '../decorators';
 
-@ApiTags('Book')
-@Controller('/book')
+@ApiTags('Books')
+@Controller('/books')
 @UseUserAuthentication()
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   @Post()
   @ApiCreatedResponse()
-  async create(@Body() dto: BookCreateDto): Promise<void> {
-    await this.bookService.create('unknown', dto);
+  async create(
+    @Body() dto: BookCreateDto,
+    @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
+  ): Promise<void> {
+    await this.bookService.create(authenticatedUser, dto);
   }
 
   @Delete(':id')
   @ApiNoContentResponse()
-  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    await this.bookService.delete('unknown', id);
+  async delete(
+    @Param('id', ParseUUIDPipe) id: string,
+    @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
+  ): Promise<void> {
+    await this.bookService.delete(authenticatedUser, id);
   }
 
   @Put(':id')
@@ -41,13 +52,14 @@ export class BookController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: BookUpdateDto,
+    @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
   ): Promise<void> {
-    await this.bookService.update('unknown', id, dto);
+    await this.bookService.update(authenticatedUser, id, dto);
   }
 
   @Get(':id')
   @ApiOkResponse({ type: BookDto })
   async get(@Param('id', ParseUUIDPipe) id: string): Promise<BookDto> {
-    return this.get(id);
+    return this.bookService.get(id);
   }
 }

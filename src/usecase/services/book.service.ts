@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
   IDataService,
+  AuthenticatedUserDto,
   BookPermission,
   BookDto,
   BookCreateDto,
@@ -32,36 +33,35 @@ export class BookService {
     return this.dtoFactory.toDto(books);
   }
 
-  async create(requesterId: string, dto: BookCreateDto): Promise<void> {
-    dto.author = requesterId;
+  async create(
+    requester: AuthenticatedUserDto,
+    dto: BookCreateDto,
+  ): Promise<void> {
     await validateOrReject(dto);
 
     const book = this.factory.create(dto);
+    book.authorId = requester.id;
+
     await this.dataService.book.create(book);
   }
 
-  async delete(requesterId: string, id: string): Promise<void> {
+  async delete(requester: AuthenticatedUserDto, id: string): Promise<void> {
     const book = await this.dataService.book.getById(id);
-    const requester = await this.dataService.user.getById(requesterId);
-    const permission = new BookPermission(requester);
-
-    permission.canDelete(book);
+    new BookPermission(requester).canDelete(book);
 
     await this.dataService.book.delete(id);
   }
 
   async update(
-    requesterId: string,
+    requester: AuthenticatedUserDto,
     id: string,
     dto: BookUpdateDto,
   ): Promise<void> {
     await validateOrReject(dto);
 
-    const book = await this.dataService.book.getById(requesterId);
-    const requester = await this.dataService.user.getById(requesterId);
-    const permission = new BookPermission(requester);
+    const book = await this.dataService.book.getById(requester.id);
 
-    permission.canUpdate(book);
+    new BookPermission(requester).canUpdate(book);
 
     const updateData = this.factory.update(dto);
     await this.dataService.book.update(id, updateData);

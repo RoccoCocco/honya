@@ -15,13 +15,19 @@ import {
   ApiNoContentResponse,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
-import { UserDto, UserCreateDto, UserUpdateDto, UserListDto } from '@/core';
+import {
+  AuthenticatedUserDto,
+  UserDto,
+  UserCreateDto,
+  UserUpdateDto,
+  UserListDto,
+} from '@/core';
 import { UserService } from '@/usecase';
 import { ExceptionDto } from '../dto';
-import { UseUserAuthentication } from '../decorators';
+import { AuthenticatedUser, UseUserAuthentication } from '../decorators';
 
-@ApiTags('User')
-@Controller('/user')
+@ApiTags('Users')
+@Controller('/users')
 @ApiUnauthorizedResponse({ type: ExceptionDto })
 @UseUserAuthentication()
 export class UserController {
@@ -29,14 +35,20 @@ export class UserController {
 
   @Post()
   @ApiCreatedResponse()
-  async create(@Body() dto: UserCreateDto): Promise<void> {
-    await this.userService.create('unknown', dto);
+  async create(
+    @Body() dto: UserCreateDto,
+    @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
+  ): Promise<void> {
+    await this.userService.create(authenticatedUser, dto);
   }
 
   @Delete(':id')
   @ApiNoContentResponse()
-  async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    await this.userService.delete('unknown', id);
+  async delete(
+    @Param('id', ParseUUIDPipe) id: string,
+    @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
+  ): Promise<void> {
+    await this.userService.delete(authenticatedUser, id);
   }
 
   @Put(':id')
@@ -44,8 +56,9 @@ export class UserController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateDto: UserUpdateDto,
+    @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
   ): Promise<void> {
-    await this.userService.update('unknown', id, updateDto);
+    await this.userService.update(authenticatedUser, id, updateDto);
   }
 
   @Get(':id')

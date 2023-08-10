@@ -5,7 +5,7 @@ import { InsufficientPermission } from '../exceptions';
 const NOT_AN_OWNER_MESSAGE = 'Not an owner';
 
 export class BookPermission {
-  constructor(private readonly requester: User) {}
+  constructor(private readonly requester: Partial<User>) {}
 
   canDelete(book: Book): void {
     if (this.isOwnerOrAdmin(book) === false) {
