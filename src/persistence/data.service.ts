@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { IDataService, IBookRepository, IUserRepository } from '@/core';
 
-import { InMemoryBookRepository, InMemoryUserRepository } from './in-memory';
+import {
+  TypeOrmBookEntityRepository,
+  TypeOrmUserEntityRepository,
+} from './typeorm';
 
 @Injectable()
 export class DataService implements IDataService {
@@ -9,7 +12,10 @@ export class DataService implements IDataService {
 
   user: IUserRepository;
 
-  constructor(book: InMemoryBookRepository, user: InMemoryUserRepository) {
+  constructor(
+    book: TypeOrmBookEntityRepository,
+    user: TypeOrmUserEntityRepository,
+  ) {
     this.book = book;
     this.user = user;
   }
