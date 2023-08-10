@@ -1,3 +1,5 @@
+import { GenericList } from '../interfaces';
+
 export enum UserRoleEnum {
   Author = 'author',
   Admin = 'admin',
@@ -9,13 +11,17 @@ export enum UserStatusEnum {
 }
 
 export class User {
-  id = '';
+  id!: string;
 
-  firstName = '';
+  firstName!: string;
 
-  lastName = '';
+  lastName!: string;
 
-  role: UserRoleEnum = UserRoleEnum.Author;
+  role!: UserRoleEnum;
 
-  status: UserStatusEnum = UserStatusEnum.Active;
+  status!: UserStatusEnum;
+}
+
+export class UserList implements GenericList<User> {
+  items!: Array<User>;
 }

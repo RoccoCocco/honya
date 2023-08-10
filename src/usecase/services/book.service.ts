@@ -5,15 +5,17 @@ import {
   BookDto,
   BookCreateDto,
   BookUpdateDto,
+  BookListDto,
 } from '@/core';
 import { validateOrReject } from 'class-validator';
-import { BookFactory } from '../factories';
+import { BookFactory, BookDtoFactory } from '../factories';
 
 import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()
 export class BookService {
   private readonly factory = new BookFactory();
+  private readonly dtoFactory = new BookDtoFactory();
 
   constructor(
     @Inject(DATA_SERVICE)
@@ -22,12 +24,12 @@ export class BookService {
 
   async get(id: string): Promise<BookDto> {
     const book = await this.dataService.book.getById(id);
-    return this.factory.toDto(book);
+    return this.dtoFactory.toDto(book);
   }
 
-  async getAll(): Promise<Array<BookDto>> {
+  async getAll(): Promise<BookListDto> {
     const books = await this.dataService.book.getAll();
-    return books.map((book) => this.factory.toDto(book));
+    return this.dtoFactory.toDto(books);
   }
 
   async create(requesterId: string, dto: BookCreateDto): Promise<void> {

@@ -1,9 +1,13 @@
+export interface GenericList<D> {
+  items: Array<D>;
+}
+
 export interface IGenericRepository<T> {
   create(data: T): Promise<string>;
 
   delete(id: string): Promise<void>;
 
-  getAll(): Promise<Array<T>>;
+  getAll(): Promise<GenericList<T>>;
 
   getById(id: string): Promise<T>;
 

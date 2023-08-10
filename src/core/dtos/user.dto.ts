@@ -1,25 +1,36 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { UserRoleEnum } from '../models';
-import { IsUUID, IsEnum, Length } from 'class-validator';
+import { IsUUID, IsEnum, Length, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UserDto {
   @ApiProperty()
   @IsUUID()
-  id = '';
+  id!: string;
 
   @ApiProperty()
   @Length(2, 30)
-  firstName = '';
+  firstName!: string;
 
   @ApiProperty()
   @Length(2, 30)
-  lastName = '';
+  lastName!: string;
 
   @ApiProperty({ enum: UserRoleEnum })
   @IsEnum(UserRoleEnum)
-  role: UserRoleEnum = UserRoleEnum.Author;
+  role!: UserRoleEnum;
 }
 
 export class UserUpdateDto extends OmitType(UserDto, ['id'] as const) {}
 
 export class UserCreateDto extends OmitType(UserDto, ['id'] as const) {}
+
+export class UserListDto {
+  @ApiProperty({
+    type: UserDto,
+    isArray: true,
+  })
+  @ValidateNested({ each: true })
+  @Type(() => UserDto)
+  items!: Array<UserDto>;
+}

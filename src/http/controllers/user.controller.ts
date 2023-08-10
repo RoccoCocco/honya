@@ -15,7 +15,7 @@ import {
   ApiNoContentResponse,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
-import { UserDto, UserCreateDto, UserUpdateDto } from '@/core';
+import { UserDto, UserCreateDto, UserUpdateDto, UserListDto } from '@/core';
 import { UserService } from '@/usecase';
 import { ExceptionDto } from '../dto';
 
@@ -50,5 +50,11 @@ export class UserController {
   @ApiOkResponse({ type: UserDto })
   async get(@Param('id', ParseUUIDPipe) id: string): Promise<UserDto> {
     return this.userService.get(id);
+  }
+
+  @Get()
+  @ApiOkResponse({ type: UserDto, isArray: true })
+  async getAll(): Promise<UserListDto> {
+    return this.userService.getAll();
   }
 }

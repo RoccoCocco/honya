@@ -1,9 +1,15 @@
+import { GenericList } from '../interfaces';
+
 export class Book {
-  id = '';
+  id!: string;
 
-  title = '';
+  title!: string;
 
-  description = '';
+  description!: string;
 
-  authorId = '';
+  authorId!: string;
+}
+
+export class BookList implements GenericList<Book> {
+  items!: Array<Book>;
 }

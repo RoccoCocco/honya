@@ -5,14 +5,17 @@ import {
   UserDto,
   UserCreateDto,
   UserUpdateDto,
+  UserListDto,
 } from '@/core';
 import { validateOrReject } from 'class-validator';
-import { UserFactory } from '../factories';
+import { plainToClass } from 'class-transformer';
+import { UserFactory, UserDtoFactory } from '../factories';
 import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()
 export class UserService {
   private readonly factory = new UserFactory();
+  private readonly dtoFactory = new UserDtoFactory();
 
   constructor(
     @Inject(DATA_SERVICE)
@@ -21,21 +24,22 @@ export class UserService {
 
   async get(id: string): Promise<UserDto> {
     const user = await this.repository.user.getById(id);
-    return this.factory.toDto(user);
+
+    return this.dtoFactory.toDto(user);
   }
 
-  async getAll(): Promise<Array<UserDto>> {
+  async getAll(): Promise<UserListDto> {
     const users = await this.repository.user.getAll();
-    return users.map((user) => this.factory.toDto(user));
+
+    return this.dtoFactory.toDto(users);
   }
 
   async create(requesterId: string, dto: UserCreateDto): Promise<void> {
     await validateOrReject(dto);
 
     const requester = await this.repository.user.getById(requesterId);
-    const permission = new UserPermission(requester);
 
-    permission.canCreate();
+    new UserPermission(requester).canCreate();
 
     const user = this.factory.create(dto);
     await this.repository.user.create(user);
@@ -44,9 +48,8 @@ export class UserService {
   async delete(requesterId: string, id: string): Promise<void> {
     const user = await this.repository.user.getById(id);
     const requester = await this.repository.user.getById(requesterId);
-    const permission = new UserPermission(requester);
 
-    permission.canDelete(user);
+    new UserPermission(requester).canDelete(user);
 
     await this.repository.user.delete(id);
   }
@@ -56,13 +59,13 @@ export class UserService {
     id: string,
     dto: UserUpdateDto,
   ): Promise<void> {
+    dto = plainToClass(UserUpdateDto, dto);
     await validateOrReject(dto);
 
     const updateData = this.factory.update(dto);
     const requester = await this.repository.user.getById(requesterId);
-    const permission = new UserPermission(requester);
 
-    permission.canUpdate(id, updateData);
+    new UserPermission(requester).canUpdate(id, updateData);
 
     await this.repository.user.update(id, updateData);
   }
