@@ -1,5 +1,5 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { UserRoleEnum } from '../models';
+import { UserRoleEnum, UserStatusEnum } from '../models';
 import {
   IsUUID,
   IsEnum,
@@ -32,6 +32,10 @@ export class UserDto {
   @ApiProperty({ enum: UserRoleEnum })
   @IsEnum(UserRoleEnum)
   role!: UserRoleEnum;
+
+  @ApiProperty({ enum: UserStatusEnum })
+  @IsEnum(UserStatusEnum)
+  status!: UserStatusEnum;
 }
 
 export class UserUpdateDto extends OmitType(UserDto, ['id'] as const) {}

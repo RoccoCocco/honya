@@ -4,6 +4,7 @@ import {
   User,
   NotFoundException,
   UserRoleEnum,
+  UserStatusEnum,
 } from '@/core';
 
 export class InMemoryUserRepository implements IUserRepository {
@@ -16,7 +17,8 @@ export class InMemoryUserRepository implements IUserRepository {
     user.lastName = 'Dummy';
     user.username = 'dummy';
     user.role = UserRoleEnum.Admin;
-    user.id = 'unknown';
+    user.status = UserStatusEnum.Active;
+    user.id = '1f58632e-fd2f-4e77-81b9-fb28d5f109ef';
 
     this.memory.set(user.id, user);
   }
@@ -57,15 +59,10 @@ export class InMemoryUserRepository implements IUserRepository {
     throw new NotFoundException('user', id);
   }
 
-  async getOneByUsername(username: string) {
-    const user = Array.from(this.memory.values()).find(
-      (x) => x.username === username,
-    );
+  async getOneByUsername(username: string): Promise<User | null> {
+    const list = Array.from(this.memory.values());
+    const user = list.find((item) => item.username === username);
 
-    if (user) {
-      return user;
-    }
-
-    throw new NotFoundException('user', username);
+    return user ?? null;
   }
 }

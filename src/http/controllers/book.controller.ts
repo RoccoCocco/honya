@@ -11,17 +11,16 @@ import {
 import {
   ApiTags,
   ApiOkResponse,
-  ApiUnauthorizedResponse,
   ApiNoContentResponse,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
 import { BookDto, BookCreateDto, BookUpdateDto } from '@/core';
 import { BookService } from '@/usecase';
-import { ExceptionDto } from '../dto';
+import { UseUserAuthentication } from '../decorators';
 
 @ApiTags('Book')
 @Controller('/book')
-@ApiUnauthorizedResponse({ type: ExceptionDto })
+@UseUserAuthentication()
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 

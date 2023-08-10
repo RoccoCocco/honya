@@ -1,10 +1,16 @@
 import { Module } from '@nestjs/common';
 
 import { UseCaseModule } from '@/usecase';
-import { BookController, UserController } from './controllers';
+import {
+  AuthenticationController,
+  BookController,
+  UserController,
+} from './controllers';
+import { AuthenticationGuard } from './guards';
 
 @Module({
-  controllers: [UserController, BookController],
+  controllers: [AuthenticationController, UserController, BookController],
   imports: [UseCaseModule],
+  providers: [AuthenticationGuard],
 })
 export class HttpModule {}

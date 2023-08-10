@@ -1,16 +1,22 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 import { DataService, PersistenceModule } from '@/persistence';
-import { BookService, UserService } from './services';
+import { AuthenticationService, BookService, UserService } from './services';
 
 import { DATA_SERVICE } from './usecase.tokens';
 
+const services = [AuthenticationService, BookService, UserService] as const;
+
 @Module({
-  imports: [PersistenceModule],
-  providers: [
-    { provide: DATA_SERVICE, useExisting: DataService },
-    BookService,
-    UserService,
+  imports: [
+    JwtModule.register({
+      global: true,
+      secret: 'static-secret',
+      signOptions: { expiresIn: '120s' },
+    }),
+    PersistenceModule,
   ],
-  exports: [BookService, UserService],
+  providers: [{ provide: DATA_SERVICE, useExisting: DataService }, ...services],
+  exports: [...services],
 })
 export class UseCaseModule {}
