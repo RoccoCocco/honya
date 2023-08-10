@@ -19,9 +19,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm:migration:generate": "env-cmd typeorm-ts-node-commonjs migration:generate -d src/persistence/typeorm/typeorm.datasource.ts src/persistence/typeorm/migrations/migration",
-    "typeorm:migration:run": "env-cmd typeorm-ts-node-commonjs migration:run -d src/persistence/typeorm/typeorm.datasource.ts"
+    "typeorm:migration:run": "env-cmd typeorm-ts-node-commonjs migration:run -d src/persistence/typeorm/typeorm.datasource.ts",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.0.0",
@@ -50,6 +52,7 @@
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
     "jest": "^29.5.0",
     "prettier": "^3.0.0",
     "source-map-support": "^0.5.21",
@@ -76,6 +79,12 @@
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "index.ts",
+      "main.ts",
+      ".module.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
