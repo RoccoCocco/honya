@@ -1,12 +1,25 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { UserRoleEnum } from '../models';
-import { IsUUID, IsEnum, Length, ValidateNested } from 'class-validator';
+import {
+  IsUUID,
+  IsEnum,
+  Length,
+  ValidateNested,
+  IsAlphanumeric,
+  IsLowercase,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class UserDto {
   @ApiProperty()
   @IsUUID()
   id!: string;
+
+  @ApiProperty()
+  @Length(4, 30)
+  @IsAlphanumeric()
+  @IsLowercase()
+  username!: string;
 
   @ApiProperty()
   @Length(2, 30)

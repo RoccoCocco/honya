@@ -1,5 +1,5 @@
 export class NotFoundException extends Error {
-  constructor() {
-    super('Resource not found');
+  constructor(type: string, id: string) {
+    super(`Resource not found: ${type} ${id}`);
   }
 }

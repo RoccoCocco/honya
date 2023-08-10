@@ -1,4 +1,4 @@
-import { IBookRepository, Book, NotFoundException } from '@/core';
+import { IBookRepository, GenericList, Book, NotFoundException } from '@/core';
 
 export class InMemoryBookRepository implements IBookRepository {
   private readonly memory = new Map<string, Book>();
@@ -23,8 +23,8 @@ export class InMemoryBookRepository implements IBookRepository {
     }
   }
 
-  async getAll(): Promise<Array<Book>> {
-    return Array.from(this.memory.values());
+  async getAll(): Promise<GenericList<Book>> {
+    return { items: Array.from(this.memory.values()) };
   }
 
   async getById(id: string): Promise<Book> {
@@ -34,6 +34,6 @@ export class InMemoryBookRepository implements IBookRepository {
       return book;
     }
 
-    throw new NotFoundException();
+    throw new NotFoundException('book', id);
   }
 }
