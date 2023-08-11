@@ -25,13 +25,13 @@ import { BookService } from '@/usecase';
 import {
   UseUserAuthentication,
   AuthenticatedUser,
-  ValidateAndSerialize,
+  CatchSerializeAndValidate,
 } from '../decorators';
 
 @ApiTags('Books')
 @Controller('/books')
 @UseUserAuthentication()
-@ValidateAndSerialize()
+@CatchSerializeAndValidate()
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 

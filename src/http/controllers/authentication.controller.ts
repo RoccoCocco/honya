@@ -11,10 +11,12 @@ import {
 } from '@/core';
 import { AuthenticationService } from '@/usecase';
 import { ExceptionDto } from '../dto';
+import { CatchSerializeAndValidate } from '../decorators';
 
 @ApiTags('Authentication')
 @Controller('/authentication')
 @ApiUnauthorizedResponse({ type: ExceptionDto })
+@CatchSerializeAndValidate()
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 

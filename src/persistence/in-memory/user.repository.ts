@@ -2,7 +2,7 @@ import {
   IUserRepository,
   GenericList,
   User,
-  NotFoundException,
+  NotFoundFactory,
   UserRoleEnum,
   UserStatusEnum,
 } from '@/core';
@@ -39,7 +39,7 @@ export class InMemoryUserRepository implements IUserRepository {
     const user = this.memory.get(id);
 
     if (!user) {
-      throw new NotFoundException('user', id);
+      throw NotFoundFactory.forResource({ type: 'user', id });
     }
 
     this.memory.set(id, { ...user, ...data });
@@ -56,7 +56,7 @@ export class InMemoryUserRepository implements IUserRepository {
       return user;
     }
 
-    throw new NotFoundException('user', id);
+    throw NotFoundFactory.forResource({ type: 'user', id });
   }
 
   async getOneByUsername(username: string): Promise<User | null> {

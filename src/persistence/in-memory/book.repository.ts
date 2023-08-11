@@ -1,4 +1,4 @@
-import { IBookRepository, GenericList, Book, NotFoundException } from '@/core';
+import { IBookRepository, GenericList, Book, NotFoundFactory } from '@/core';
 
 export class InMemoryBookRepository implements IBookRepository {
   private readonly memory = new Map<string, Book>();
@@ -34,6 +34,6 @@ export class InMemoryBookRepository implements IBookRepository {
       return book;
     }
 
-    throw new NotFoundException('book', id);
+    throw NotFoundFactory.forResource({ type: 'book', id });
   }
 }

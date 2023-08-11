@@ -7,7 +7,7 @@ import {
   AuthenticationSignInResponseDto,
   IDataService,
   AuthenticatedUserDto,
-  UnauthorizedException,
+  Unauthorized,
 } from '@/core';
 import { DATA_SERVICE } from '../usecase.tokens';
 
@@ -27,7 +27,7 @@ export class AuthenticationService {
     );
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new Unauthorized();
     }
 
     const response = new AuthenticationSignInResponseDto();

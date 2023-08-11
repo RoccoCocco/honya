@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import {
   AuthenticatedUserDto,
   AuthenticationSignInResponseDto,
-  UnauthorizedException,
+  Unauthorized,
 } from '@/core';
 import { AuthenticationService } from './authentication.service';
 import { UserDtoMockFactory } from '@/__mocks__';
@@ -56,7 +56,7 @@ describe(AuthenticationService.name, () => {
       JwtServiceMock.signAsync.mockResolvedValueOnce('faker.datatype');
       expect(
         service.signIn({ username: faker.internet.userName() }),
-      ).rejects.toThrowError(UnauthorizedException);
+      ).rejects.toThrowError(Unauthorized);
     });
   });
 

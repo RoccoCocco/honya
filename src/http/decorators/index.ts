@@ -1,3 +1,3 @@
 export * from './authenticated-user.decorator';
+export * from './catch-serialize-and-validate.decorator';
 export * from './use-user-authentication.decorator';
-export * from './validate-and-serialize.decorator';
