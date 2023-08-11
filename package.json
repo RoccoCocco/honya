@@ -18,6 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "docker:up": "docker-compose up",
+    "docker:up:app": "docker-compose --profile app up --build",
+    "typeorm:seed": "npx ts-node src/persistence/typeorm/typeorm.seeder.ts",
     "typeorm:migration:generate": "env-cmd typeorm-ts-node-commonjs migration:generate -d src/persistence/typeorm/typeorm.datasource.ts src/persistence/typeorm/migrations/migration",
     "typeorm:migration:run": "env-cmd typeorm-ts-node-commonjs migration:run -d src/persistence/typeorm/typeorm.datasource.ts",
     "commitlint": "commitlint --edit"
