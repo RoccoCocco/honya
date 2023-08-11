@@ -1,6 +1,7 @@
 import {
   Controller,
   Body,
+  Query,
   Get,
   Put,
   Delete,
@@ -20,6 +21,7 @@ import {
   UserCreateDto,
   UserUpdateDto,
   UserListDto,
+  UserQueryDto,
 } from '@/core';
 import { UserService } from '@/usecase';
 import {
@@ -70,8 +72,8 @@ export class UserController {
   }
 
   @Get()
-  @ApiOkResponse({ type: UserDto, isArray: true })
-  async getAll(): Promise<UserListDto> {
-    return this.userService.getAll();
+  @ApiOkResponse({ type: UserListDto })
+  async getAll(@Query() query: UserQueryDto): Promise<UserListDto> {
+    return this.userService.getAll(query);
   }
 }

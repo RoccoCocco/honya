@@ -7,6 +7,7 @@ import {
   Post,
   Param,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -20,6 +21,7 @@ import {
   BookCreateDto,
   BookUpdateDto,
   BookListDto,
+  BookQueryDto,
 } from '@/core';
 import { BookService } from '@/usecase';
 import {
@@ -71,7 +73,7 @@ export class BookController {
 
   @Get()
   @ApiOkResponse({ type: BookListDto })
-  async getAll(): Promise<BookListDto> {
-    return this.bookService.getAll();
+  async getAll(@Query() query: BookQueryDto): Promise<BookListDto> {
+    return this.bookService.getAll(query);
   }
 }

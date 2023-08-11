@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User, UserList, IUserRepository } from '@/core';
+import { User, UserList, IUserRepository, QueryOptions } from '@/core';
 import { UserEntity } from '../entities';
 
 @Injectable()
@@ -30,8 +30,18 @@ export class TypeOrmUserEntityRepository implements IUserRepository {
     return this.repository.findOneOrFail({ where: { id } });
   }
 
-  async getAll(): Promise<UserList> {
-    const items = await this.repository.find();
+  async getAll(queryOptions?: QueryOptions<User>): Promise<UserList> {
+    const items = await this.repository.find(
+      queryOptions && {
+        take: queryOptions.limit,
+        skip: queryOptions.offset,
+        order: {
+          ...(queryOptions.sortBy && {
+            [queryOptions.sortBy]: queryOptions.sortOrder ?? 'asc',
+          }),
+        },
+      },
+    );
     return { items };
   }
 

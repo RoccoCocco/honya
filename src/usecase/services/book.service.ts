@@ -7,6 +7,7 @@ import {
   BookCreateDto,
   BookUpdateDto,
   BookListDto,
+  BookQueryDto,
 } from '@/core';
 import { validateOrReject } from 'class-validator';
 import { BookFactory, BookDtoFactory } from '../factories';
@@ -28,8 +29,10 @@ export class BookService {
     return this.dtoFactory.toDto(book);
   }
 
-  async getAll(): Promise<BookListDto> {
-    const books = await this.dataService.book.getAll();
+  async getAll(dto?: BookQueryDto): Promise<BookListDto> {
+    const books = await this.dataService.book.getAll(
+      dto && this.factory.query(dto),
+    );
     return this.dtoFactory.toDto(books);
   }
 

@@ -5,10 +5,16 @@ import {
   BookCreateDto,
   BookUpdateDto,
   BookList,
+  BookQueryDto,
+  QueryOptions,
 } from '@/core';
 import { plainToClass } from 'class-transformer';
 
 export class BookFactory {
+  query(dto: BookQueryDto): QueryOptions<Book> {
+    return dto;
+  }
+
   create(dto: BookCreateDto): Book {
     return plainToClass(Book, dto);
   }
