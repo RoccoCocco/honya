@@ -19,6 +19,7 @@ import {
   BookDto,
   BookCreateDto,
   BookUpdateDto,
+  BookListDto,
 } from '@/core';
 import { BookService } from '@/usecase';
 import { UseUserAuthentication, AuthenticatedUser } from '../decorators';
@@ -61,5 +62,11 @@ export class BookController {
   @ApiOkResponse({ type: BookDto })
   async get(@Param('id', ParseUUIDPipe) id: string): Promise<BookDto> {
     return this.bookService.get(id);
+  }
+
+  @Get()
+  @ApiOkResponse({ type: BookListDto })
+  async getAll(): Promise<BookListDto> {
+    return this.bookService.getAll();
   }
 }
