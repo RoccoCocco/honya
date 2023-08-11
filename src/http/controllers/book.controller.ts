@@ -22,11 +22,16 @@ import {
   BookListDto,
 } from '@/core';
 import { BookService } from '@/usecase';
-import { UseUserAuthentication, AuthenticatedUser } from '../decorators';
+import {
+  UseUserAuthentication,
+  AuthenticatedUser,
+  ValidateAndSerialize,
+} from '../decorators';
 
 @ApiTags('Books')
 @Controller('/books')
 @UseUserAuthentication()
+@ValidateAndSerialize()
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 

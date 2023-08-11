@@ -24,12 +24,17 @@ import {
 } from '@/core';
 import { UserService } from '@/usecase';
 import { ExceptionDto } from '../dto';
-import { AuthenticatedUser, UseUserAuthentication } from '../decorators';
+import {
+  AuthenticatedUser,
+  UseUserAuthentication,
+  ValidateAndSerialize,
+} from '../decorators';
 
 @ApiTags('Users')
 @Controller('/users')
 @ApiUnauthorizedResponse({ type: ExceptionDto })
 @UseUserAuthentication()
+@ValidateAndSerialize()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

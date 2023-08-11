@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsUUID, Length, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Book } from '@/core';
@@ -21,15 +21,12 @@ export class BookDto implements Book {
   authorId!: string;
 }
 
-export class BookUpdateDto extends OmitType(BookDto, [
-  'id',
-  'authorId',
-] as const) {}
-
 export class BookCreateDto extends OmitType(BookDto, [
   'id',
   'authorId',
 ] as const) {}
+
+export class BookUpdateDto extends PartialType(BookCreateDto) {}
 
 export class BookListDto {
   @ApiProperty({
