@@ -1,5 +1,11 @@
-export class NotFoundException extends Error {
-  constructor(type: string, id: string) {
-    super(`Resource not found: ${type} ${id}`);
+export class NotFound extends Error {
+  constructor(reason?: string) {
+    super(reason);
+  }
+}
+
+export class NotFoundFactory {
+  static forResource(data: { type: string; id: string }) {
+    return new NotFound(`${data.type} with ID: ${data.id} not found`);
   }
 }

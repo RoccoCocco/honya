@@ -1,10 +1,11 @@
 import { Test } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { faker } from '@faker-js/faker';
+import { hash } from 'bcrypt';
 import {
   AuthenticatedUserDto,
   AuthenticationSignInResponseDto,
-  UnauthorizedException,
+  Unauthorized,
 } from '@/core';
 import { AuthenticationService } from './authentication.service';
 import { UserDtoMockFactory } from '@/__mocks__';
@@ -17,6 +18,9 @@ const DataServiceMock = {
     create: jest.fn(),
     delete: jest.fn(),
     update: jest.fn(),
+  },
+  passwordVault: {
+    getById: jest.fn(),
   },
 };
 
@@ -42,12 +46,20 @@ describe(AuthenticationService.name, () => {
 
   describe('signIn', () => {
     it('should sign in', async () => {
+      const password = faker.internet.password();
+      const passwordHash = await hash(password, 1);
       DataServiceMock.user.getOneByUsername.mockResolvedValueOnce(
         UserDtoMockFactory.makeAdminUser(),
       );
+      DataServiceMock.passwordVault.getById.mockResolvedValueOnce({
+        passwordHash,
+      });
       JwtServiceMock.signAsync.mockResolvedValueOnce('faker.datatype');
       expect(
-        await service.signIn({ username: faker.internet.userName() }),
+        await service.signIn({
+          username: faker.internet.userName(),
+          password,
+        }),
       ).toBeInstanceOf(AuthenticationSignInResponseDto);
     });
 
@@ -55,8 +67,11 @@ describe(AuthenticationService.name, () => {
       DataServiceMock.user.getOneByUsername.mockResolvedValueOnce(null);
       JwtServiceMock.signAsync.mockResolvedValueOnce('faker.datatype');
       expect(
-        service.signIn({ username: faker.internet.userName() }),
-      ).rejects.toThrowError(UnauthorizedException);
+        service.signIn({
+          username: faker.internet.userName(),
+          password: faker.internet.password(),
+        }),
+      ).rejects.toThrowError(Unauthorized);
     });
   });
 

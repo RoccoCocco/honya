@@ -7,6 +7,7 @@ import {
   UserCreateDto,
   UserUpdateDto,
   UserListDto,
+  UserQueryDto,
 } from '@/core';
 import { validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
@@ -29,8 +30,10 @@ export class UserService {
     return this.dtoFactory.toDto(user);
   }
 
-  async getAll(): Promise<UserListDto> {
-    const users = await this.repository.user.getAll();
+  async getAll(dto?: UserQueryDto): Promise<UserListDto> {
+    const users = await this.repository.user.getAll(
+      dto && this.factory.query(dto),
+    );
 
     return this.dtoFactory.toDto(users);
   }

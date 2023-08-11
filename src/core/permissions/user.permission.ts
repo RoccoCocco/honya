@@ -1,39 +1,37 @@
 import { User, UserRoleEnum, UserStatusEnum } from '../models';
-import { InsufficientPermission } from '../exceptions';
+import { ForbiddenExceptionFactory } from '../exceptions';
 
 export class UserPermission {
   constructor(private readonly requester: Partial<User>) {}
 
   canCreate(): void {
     if (this.isAdmin() === false) {
-      throw new InsufficientPermission('Missing admin permissions');
+      throw ForbiddenExceptionFactory.notAdmin();
     }
   }
 
   canDelete(target: User): void {
     if (this.isAdmin() === false) {
-      throw new InsufficientPermission('Missing admin permissions');
+      throw ForbiddenExceptionFactory.notAdmin();
     }
 
     if (
       target.role === UserRoleEnum.Admin &&
       target.status !== UserStatusEnum.Deactivated
     ) {
-      throw new InsufficientPermission('Cant delete active user');
+      throw ForbiddenExceptionFactory.isActiveUser();
     }
   }
 
   canUpdate(id: string, updateData: Partial<User>): void {
-    if (this.isSelf(id)) {
-      return;
-    }
+    if (this.isSelf(id) === false) {
+      if (updateData.status !== undefined) {
+        throw ForbiddenExceptionFactory.notOwner();
+      }
 
-    if (updateData.status !== undefined) {
-      throw new InsufficientPermission('Cant deactivate other users');
-    }
-
-    if (this.isAdmin() === false) {
-      throw new InsufficientPermission('Missing admin permissions');
+      if (this.isAdmin() === false) {
+        throw ForbiddenExceptionFactory.notAdmin();
+      }
     }
   }
 

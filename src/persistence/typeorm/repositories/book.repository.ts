@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Book, BookList, IBookRepository } from '@/core';
+import { Book, BookList, IBookRepository, QueryOptions } from '@/core';
 import { BookEntity } from '../entities';
 
 @Injectable()
@@ -30,8 +30,18 @@ export class TypeOrmBookEntityRepository implements IBookRepository {
     return this.repository.findOneOrFail({ where: { id } });
   }
 
-  async getAll(): Promise<BookList> {
-    const items = await this.repository.find();
+  async getAll(queryOptions?: QueryOptions<Book>): Promise<BookList> {
+    const items = await this.repository.find(
+      queryOptions && {
+        take: queryOptions.limit,
+        skip: queryOptions.offset,
+        order: {
+          ...(queryOptions.sortBy && {
+            [queryOptions.sortBy]: queryOptions.sortOrder ?? 'asc',
+          }),
+        },
+      },
+    );
     return { items };
   }
 }

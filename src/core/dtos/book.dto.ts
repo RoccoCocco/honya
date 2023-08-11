@@ -1,7 +1,8 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsUUID, Length, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Book } from '@/core';
+import { QueryOptionsDtoFactory } from './query-options.dto';
 
 export class BookDto implements Book {
   @ApiProperty()
@@ -21,15 +22,12 @@ export class BookDto implements Book {
   authorId!: string;
 }
 
-export class BookUpdateDto extends OmitType(BookDto, [
-  'id',
-  'authorId',
-] as const) {}
-
 export class BookCreateDto extends OmitType(BookDto, [
   'id',
   'authorId',
 ] as const) {}
+
+export class BookUpdateDto extends PartialType(BookCreateDto) {}
 
 export class BookListDto {
   @ApiProperty({
@@ -40,3 +38,7 @@ export class BookListDto {
   @Type(() => BookDto)
   items!: Array<BookDto>;
 }
+
+export class BookQueryDto extends PartialType(
+  QueryOptionsDtoFactory<BookDto>(['title']),
+) {}

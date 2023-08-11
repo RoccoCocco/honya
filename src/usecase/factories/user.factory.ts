@@ -1,14 +1,25 @@
 import {
+  AuthenticationSignUpDto,
   User,
   UserDto,
   UserListDto,
   UserCreateDto,
   UserUpdateDto,
   UserList,
+  UserQueryDto,
+  QueryOptions,
 } from '@/core';
 import { plainToClass } from 'class-transformer';
 
 export class UserFactory {
+  query(dto: UserQueryDto): QueryOptions<User> {
+    return dto;
+  }
+
+  signUp(dto: AuthenticationSignUpDto) {
+    return plainToClass(User, dto);
+  }
+
   create(dto: UserCreateDto): User {
     return plainToClass(User, dto);
   }

@@ -7,6 +7,7 @@ import {
   Post,
   Param,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -19,13 +20,20 @@ import {
   BookDto,
   BookCreateDto,
   BookUpdateDto,
+  BookListDto,
+  BookQueryDto,
 } from '@/core';
 import { BookService } from '@/usecase';
-import { UseUserAuthentication, AuthenticatedUser } from '../decorators';
+import {
+  UseUserAuthentication,
+  AuthenticatedUser,
+  CatchSerializeAndValidate,
+} from '../decorators';
 
 @ApiTags('Books')
 @Controller('/books')
 @UseUserAuthentication()
+@CatchSerializeAndValidate()
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
@@ -61,5 +69,11 @@ export class BookController {
   @ApiOkResponse({ type: BookDto })
   async get(@Param('id', ParseUUIDPipe) id: string): Promise<BookDto> {
     return this.bookService.get(id);
+  }
+
+  @Get()
+  @ApiOkResponse({ type: BookListDto })
+  async getAll(@Query() query: BookQueryDto): Promise<BookListDto> {
+    return this.bookService.getAll(query);
   }
 }

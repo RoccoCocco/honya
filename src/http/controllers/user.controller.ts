@@ -1,6 +1,7 @@
 import {
   Controller,
   Body,
+  Query,
   Get,
   Put,
   Delete,
@@ -11,7 +12,6 @@ import {
 import {
   ApiTags,
   ApiOkResponse,
-  ApiUnauthorizedResponse,
   ApiNoContentResponse,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
@@ -21,15 +21,19 @@ import {
   UserCreateDto,
   UserUpdateDto,
   UserListDto,
+  UserQueryDto,
 } from '@/core';
 import { UserService } from '@/usecase';
-import { ExceptionDto } from '../dto';
-import { AuthenticatedUser, UseUserAuthentication } from '../decorators';
+import {
+  AuthenticatedUser,
+  UseUserAuthentication,
+  CatchSerializeAndValidate,
+} from '../decorators';
 
 @ApiTags('Users')
 @Controller('/users')
-@ApiUnauthorizedResponse({ type: ExceptionDto })
 @UseUserAuthentication()
+@CatchSerializeAndValidate()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -68,8 +72,8 @@ export class UserController {
   }
 
   @Get()
-  @ApiOkResponse({ type: UserDto, isArray: true })
-  async getAll(): Promise<UserListDto> {
-    return this.userService.getAll();
+  @ApiOkResponse({ type: UserListDto })
+  async getAll(@Query() query: UserQueryDto): Promise<UserListDto> {
+    return this.userService.getAll(query);
   }
 }

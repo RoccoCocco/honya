@@ -1,5 +1,5 @@
-export class UnauthorizedException extends Error {
-  constructor() {
-    super('Unauthorized');
+export class Unauthorized extends Error {
+  constructor(reason?: string) {
+    super(reason);
   }
 }

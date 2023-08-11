@@ -1,21 +1,19 @@
 import { Book, User, UserRoleEnum } from '../models';
 
-import { InsufficientPermission } from '../exceptions';
-
-const NOT_AN_OWNER_MESSAGE = 'Not an owner';
+import { ForbiddenExceptionFactory } from '../exceptions';
 
 export class BookPermission {
   constructor(private readonly requester: Partial<User>) {}
 
   canDelete(book: Book): void {
     if (this.isOwnerOrAdmin(book) === false) {
-      throw new InsufficientPermission(NOT_AN_OWNER_MESSAGE);
+      throw ForbiddenExceptionFactory.notOwner();
     }
   }
 
   canUpdate(book: Book): void {
     if (this.isOwnerOrAdmin(book) === false) {
-      throw new InsufficientPermission(NOT_AN_OWNER_MESSAGE);
+      throw ForbiddenExceptionFactory.notOwner();
     }
   }
 

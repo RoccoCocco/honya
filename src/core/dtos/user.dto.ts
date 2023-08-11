@@ -1,5 +1,6 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { UserRoleEnum, UserStatusEnum } from '../models';
+import { QueryOptionsDtoFactory } from './query-options.dto';
 import {
   IsUUID,
   IsEnum,
@@ -38,9 +39,9 @@ export class UserDto {
   status!: UserStatusEnum;
 }
 
-export class UserUpdateDto extends OmitType(UserDto, ['id'] as const) {}
-
 export class UserCreateDto extends OmitType(UserDto, ['id'] as const) {}
+
+export class UserUpdateDto extends PartialType(UserCreateDto) {}
 
 export class UserListDto {
   @ApiProperty({
@@ -51,3 +52,7 @@ export class UserListDto {
   @Type(() => UserDto)
   items!: Array<UserDto>;
 }
+
+export class UserQueryDto extends PartialType(
+  QueryOptionsDtoFactory<UserDto>(['firstName', 'lastName', 'role', 'status']),
+) {}
