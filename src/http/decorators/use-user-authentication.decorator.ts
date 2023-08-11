@@ -1,6 +1,8 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiUnauthorizedResponse } from '@nestjs/swagger';
+
 import { ExceptionDto } from '@/core';
+
 import { AuthenticationGuard } from '../guards';
 
 export const USER_AUTHENTICATION = 'UserAuthentication';

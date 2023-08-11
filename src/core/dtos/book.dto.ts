@@ -1,7 +1,9 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
-import { IsUUID, Length, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IsUUID, Length, ValidateNested } from 'class-validator';
+
 import { Book } from '@/core';
+
 import { QueryOptionsDtoFactory } from './query-options.dto';
 
 export class BookDto implements Book {

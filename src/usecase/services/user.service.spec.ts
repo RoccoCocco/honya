@@ -1,8 +1,10 @@
 import { Test } from '@nestjs/testing';
-import { User, UserList, UserDto, UserListDto } from '@/core';
+
 import { UserDtoMockFactory } from '@/__mocks__';
-import { UserService } from './user.service';
+import { User, UserDto, UserList, UserListDto } from '@/core';
+
 import { DATA_SERVICE } from '../usecase.tokens';
+import { UserService } from './user.service';
 
 const DataServiceMock = {
   user: {

@@ -1,15 +1,16 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
-import { UserRoleEnum, UserStatusEnum } from '../models';
-import { QueryOptionsDtoFactory } from './query-options.dto';
+import { Type } from 'class-transformer';
 import {
-  IsUUID,
+  IsAlphanumeric,
   IsEnum,
+  IsLowercase,
+  IsUUID,
   Length,
   ValidateNested,
-  IsAlphanumeric,
-  IsLowercase,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+
+import { UserRoleEnum, UserStatusEnum } from '../models';
+import { QueryOptionsDtoFactory } from './query-options.dto';
 
 export class UserDto {
   @ApiProperty()

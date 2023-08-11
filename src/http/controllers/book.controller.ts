@@ -1,33 +1,35 @@
 import {
-  Controller,
   Body,
-  Get,
-  Put,
+  Controller,
   Delete,
-  Post,
+  Get,
   Param,
   ParseUUIDPipe,
+  Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import {
-  ApiTags,
-  ApiOkResponse,
-  ApiNoContentResponse,
   ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
 } from '@nestjs/swagger';
+
 import {
   AuthenticatedUserDto,
-  BookDto,
   BookCreateDto,
-  BookUpdateDto,
+  BookDto,
   BookListDto,
   BookQueryDto,
+  BookUpdateDto,
 } from '@/core';
 import { BookService } from '@/usecase';
+
 import {
-  UseUserAuthentication,
   AuthenticatedUser,
   CatchSerializeAndValidate,
+  UseUserAuthentication,
 } from '../decorators';
 
 @ApiTags('Books')

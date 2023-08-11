@@ -1,5 +1,7 @@
 import { ExecutionContext } from '@nestjs/common';
+
 import { AuthenticatedUserDto } from '@/core';
+
 import {
   AuthenticatedUser,
   validateUserFromRequest,

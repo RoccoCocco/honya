@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+
 import { User, UserRoleEnum, UserStatusEnum } from '@/core';
 
 export class UserDtoMockFactory {

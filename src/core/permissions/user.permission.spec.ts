@@ -1,8 +1,7 @@
-import { UserRoleEnum, UserStatusEnum } from '../models';
-
-import { UserPermission } from './user.permission';
-
 import { UserDtoMockFactory } from '@/__mocks__';
+
+import { UserRoleEnum, UserStatusEnum } from '../models';
+import { UserPermission } from './user.permission';
 
 describe(UserPermission.name, () => {
   describe('canCreate', () => {

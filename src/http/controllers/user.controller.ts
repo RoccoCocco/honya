@@ -1,33 +1,35 @@
 import {
-  Controller,
   Body,
-  Query,
-  Get,
-  Put,
+  Controller,
   Delete,
-  Post,
+  Get,
   Param,
   ParseUUIDPipe,
+  Post,
+  Put,
+  Query,
 } from '@nestjs/common';
 import {
-  ApiTags,
-  ApiOkResponse,
-  ApiNoContentResponse,
   ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
 } from '@nestjs/swagger';
+
 import {
   AuthenticatedUserDto,
-  UserDto,
   UserCreateDto,
-  UserUpdateDto,
+  UserDto,
   UserListDto,
   UserQueryDto,
+  UserUpdateDto,
 } from '@/core';
 import { UserService } from '@/usecase';
+
 import {
   AuthenticatedUser,
-  UseUserAuthentication,
   CatchSerializeAndValidate,
+  UseUserAuthentication,
 } from '../decorators';
 
 @ApiTags('Users')

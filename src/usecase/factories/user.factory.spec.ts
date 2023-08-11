@@ -1,5 +1,6 @@
-import { User, UserDto, UserListDto, UserList } from '@/core';
-import { UserFactory, UserDtoFactory } from './user.factory';
+import { User, UserDto, UserList, UserListDto } from '@/core';
+
+import { UserDtoFactory, UserFactory } from './user.factory';
 
 describe(UserFactory.name, () => {
   it('shold be instance of user', () => {

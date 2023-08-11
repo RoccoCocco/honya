@@ -1,18 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { hash, compare } from 'bcrypt';
-import { validateOrReject } from 'class-validator';
+import { compare, hash } from 'bcrypt';
 import { plainToClass } from 'class-transformer';
+import { validateOrReject } from 'class-validator';
+
 import {
-  AuthenticationSignInDto,
-  AuthenticationSignUpDto,
-  AuthenticationSignInResponseDto,
-  IDataService,
   AuthenticatedUserDto,
+  AuthenticationSignInDto,
+  AuthenticationSignInResponseDto,
+  AuthenticationSignUpDto,
+  IDataService,
   Unauthorized,
   UserRoleEnum,
   UserStatusEnum,
 } from '@/core';
+
 import { UserFactory } from '../factories';
 import { DATA_SERVICE } from '../usecase.tokens';
 

@@ -1,6 +1,5 @@
-import { Book, User, UserRoleEnum } from '../models';
-
 import { ForbiddenExceptionFactory } from '../exceptions';
+import { Book, User, UserRoleEnum } from '../models';
 
 export class BookPermission {
   constructor(private readonly requester: Partial<User>) {}

@@ -1,5 +1,5 @@
-import { User, UserRoleEnum, UserStatusEnum } from '../models';
 import { ForbiddenExceptionFactory } from '../exceptions';
+import { User, UserRoleEnum, UserStatusEnum } from '../models';
 
 export class UserPermission {
   constructor(private readonly requester: Partial<User>) {}

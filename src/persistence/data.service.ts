@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+
 import { IDataService } from '@/core';
 
 import {
   TypeOrmBookEntityRepository,
-  TypeOrmUserEntityRepository,
   TypeOrmPasswordVaultRepository,
+  TypeOrmUserEntityRepository,
 } from './typeorm';
 
 @Injectable()

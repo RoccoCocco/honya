@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { Factory } from 'nestjs-seeder';
-import { User, UserStatusEnum, UserRoleEnum } from '../../../core';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+
+import { User, UserRoleEnum, UserStatusEnum } from '../../../core';
 
 @Entity({ name: 'users' })
 @Unique('UQ_user_username', ['username'])

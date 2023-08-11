@@ -1,4 +1,4 @@
-import { IBookRepository, GenericList, Book, NotFoundFactory } from '@/core';
+import { Book, GenericList, IBookRepository, NotFoundFactory } from '@/core';
 
 export class InMemoryBookRepository implements IBookRepository {
   private readonly memory = new Map<string, Book>();

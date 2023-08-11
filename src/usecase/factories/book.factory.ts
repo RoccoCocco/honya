@@ -1,14 +1,15 @@
+import { plainToClass } from 'class-transformer';
+
 import {
   Book,
-  BookDto,
-  BookListDto,
   BookCreateDto,
-  BookUpdateDto,
+  BookDto,
   BookList,
+  BookListDto,
   BookQueryDto,
+  BookUpdateDto,
   QueryOptions,
 } from '@/core';
-import { plainToClass } from 'class-transformer';
 
 export class BookFactory {
   query(dto: BookQueryDto): QueryOptions<Book> {

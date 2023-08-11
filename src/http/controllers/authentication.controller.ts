@@ -1,17 +1,19 @@
-import { Controller, Body, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import {
+  ApiCreatedResponse,
+  ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
-  ApiOkResponse,
-  ApiCreatedResponse,
 } from '@nestjs/swagger';
+
 import {
   AuthenticationSignInDto,
-  AuthenticationSignUpDto,
   AuthenticationSignInResponseDto,
+  AuthenticationSignUpDto,
   ExceptionDto,
 } from '@/core';
 import { AuthenticationService } from '@/usecase';
+
 import { CatchSerializeAndValidate } from '../decorators';
 
 @ApiTags('Authentication')

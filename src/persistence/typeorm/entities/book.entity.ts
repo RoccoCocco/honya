@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Factory } from 'nestjs-seeder';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
 import { Book } from '../../../core';
 
 @Entity({ name: 'books' })

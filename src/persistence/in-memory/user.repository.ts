@@ -1,8 +1,8 @@
 import {
-  IUserRepository,
   GenericList,
-  User,
+  IUserRepository,
   NotFoundFactory,
+  User,
   UserRoleEnum,
   UserStatusEnum,
 } from '@/core';

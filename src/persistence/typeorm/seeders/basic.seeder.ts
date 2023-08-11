@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Not, IsNull } from 'typeorm';
-import { Seeder, DataFactory } from 'nestjs-seeder';
+import { DataFactory, Seeder } from 'nestjs-seeder';
+import { IsNull, Not, Repository } from 'typeorm';
 
 import { BookEntity, UserEntity } from '../entities';
 

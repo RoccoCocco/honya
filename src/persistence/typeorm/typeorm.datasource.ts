@@ -1,6 +1,7 @@
-import { DataSource } from 'typeorm';
 import { plainToClass } from 'class-transformer';
 import { join } from 'path';
+import { DataSource } from 'typeorm';
+
 import {
   DataSourceConfiguration,
   TypeOrmConfigurationFactory,

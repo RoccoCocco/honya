@@ -1,17 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
+import { validateOrReject } from 'class-validator';
+
 import {
   AuthenticatedUserDto,
   IDataService,
-  UserPermission,
-  UserDto,
   UserCreateDto,
-  UserUpdateDto,
+  UserDto,
   UserListDto,
+  UserPermission,
   UserQueryDto,
+  UserUpdateDto,
 } from '@/core';
-import { validateOrReject } from 'class-validator';
-import { plainToClass } from 'class-transformer';
-import { UserFactory, UserDtoFactory } from '../factories';
+
+import { UserDtoFactory, UserFactory } from '../factories';
 import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()

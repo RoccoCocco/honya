@@ -1,8 +1,7 @@
-import { UserRoleEnum } from '../models';
-
-import { BookPermission } from './book.permission';
-
 import { BookDtoMockFactory, UserDtoMockFactory } from '@/__mocks__';
+
+import { UserRoleEnum } from '../models';
+import { BookPermission } from './book.permission';
 
 describe(BookPermission.name, () => {
   describe('canDelete', () => {

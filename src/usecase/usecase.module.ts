@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { DataService, PersistenceModule } from '@/persistence';
-import { AuthenticationService, BookService, UserService } from './services';
 
+import { DataService, PersistenceModule } from '@/persistence';
+
+import { AuthenticationService, BookService, UserService } from './services';
 import { DATA_SERVICE } from './usecase.tokens';
 
 const services = [AuthenticationService, BookService, UserService] as const;

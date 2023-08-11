@@ -1,5 +1,6 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
-import { Length, IsJWT } from 'class-validator';
+import { IsJWT, Length } from 'class-validator';
+
 import { UserDto } from './user.dto';
 
 export class AuthenticationSignUpDto extends PickType(UserDto, [

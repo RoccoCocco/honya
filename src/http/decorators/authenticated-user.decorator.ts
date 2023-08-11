@@ -1,4 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+
 import { AuthenticatedUserDto } from '@/core';
 
 export const validateUserFromRequest = (_: unknown, ctx: ExecutionContext) => {

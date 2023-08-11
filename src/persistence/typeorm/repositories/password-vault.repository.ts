@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PasswordVault, IPasswordVaultRepository } from '@/core';
+
+import { IPasswordVaultRepository, PasswordVault } from '@/core';
+
 import { PasswordVaultEntity } from '../entities';
 
 @Injectable()

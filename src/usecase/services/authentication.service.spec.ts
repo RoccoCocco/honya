@@ -1,15 +1,17 @@
-import { Test } from '@nestjs/testing';
-import { JwtService } from '@nestjs/jwt';
 import { faker } from '@faker-js/faker';
+import { JwtService } from '@nestjs/jwt';
+import { Test } from '@nestjs/testing';
 import { hash } from 'bcrypt';
+
+import { UserDtoMockFactory } from '@/__mocks__';
 import {
   AuthenticatedUserDto,
   AuthenticationSignInResponseDto,
   Unauthorized,
 } from '@/core';
-import { AuthenticationService } from './authentication.service';
-import { UserDtoMockFactory } from '@/__mocks__';
+
 import { DATA_SERVICE } from '../usecase.tokens';
+import { AuthenticationService } from './authentication.service';
 
 const DataServiceMock = {
   user: {

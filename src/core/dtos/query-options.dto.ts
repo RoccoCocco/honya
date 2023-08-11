@@ -1,6 +1,7 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsInt, Min, Max, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IsEnum, IsInt, Max, Min } from 'class-validator';
+
 import { QueryOptions } from '../interfaces';
 
 export const QueryOptionsDtoFactory = <D>(

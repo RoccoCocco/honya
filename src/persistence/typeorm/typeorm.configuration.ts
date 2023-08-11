@@ -1,6 +1,6 @@
-import { DataSourceOptions } from 'typeorm';
 import { plainToClass, Type } from 'class-transformer';
-import { validateSync, IsDefined, IsInt } from 'class-validator';
+import { IsDefined, IsInt, validateSync } from 'class-validator';
+import { DataSourceOptions } from 'typeorm';
 
 export class DataSourceConfiguration {
   @IsDefined()

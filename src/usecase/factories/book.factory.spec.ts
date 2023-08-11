@@ -1,5 +1,6 @@
-import { Book, BookDto, BookListDto, BookList } from '@/core';
-import { BookFactory, BookDtoFactory } from './book.factory';
+import { Book, BookDto, BookList, BookListDto } from '@/core';
+
+import { BookDtoFactory, BookFactory } from './book.factory';
 
 describe(BookFactory.name, () => {
   it('shold be instance of book', () => {

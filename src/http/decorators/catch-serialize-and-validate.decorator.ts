@@ -1,10 +1,10 @@
 import {
   applyDecorators,
-  UsePipes,
-  ValidationPipe,
-  UseInterceptors,
   ClassSerializerInterceptor,
   UseFilters,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 
 import { AllExceptionsFilter } from '../filters';

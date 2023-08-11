@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+
 import { Book } from '@/core';
 
 export class BookDtoMockFactory {

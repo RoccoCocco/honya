@@ -1,17 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  IDataService,
-  AuthenticatedUserDto,
-  BookPermission,
-  BookDto,
-  BookCreateDto,
-  BookUpdateDto,
-  BookListDto,
-  BookQueryDto,
-} from '@/core';
 import { validateOrReject } from 'class-validator';
-import { BookFactory, BookDtoFactory } from '../factories';
 
+import {
+  AuthenticatedUserDto,
+  BookCreateDto,
+  BookDto,
+  BookListDto,
+  BookPermission,
+  BookQueryDto,
+  BookUpdateDto,
+  IDataService,
+} from '@/core';
+
+import { BookDtoFactory, BookFactory } from '../factories';
 import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()

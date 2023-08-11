@@ -1,7 +1,9 @@
+import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { UnauthorizedException, ExecutionContext } from '@nestjs/common';
-import { AuthenticationGuard } from './authentication.guard';
+
 import { AuthenticationService } from '@/usecase';
+
+import { AuthenticationGuard } from './authentication.guard';
 
 const AuthenticationServiceMock = {
   verify: jest.fn(),

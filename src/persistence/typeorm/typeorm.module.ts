@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule as CoreTypeOrmModule } from '@nestjs/typeorm';
 
-import { BookEntity, UserEntity, PasswordVaultEntity } from './entities';
-import { TypeOrmConfigurationFactory } from './typeorm.configuration';
+import { BookEntity, PasswordVaultEntity, UserEntity } from './entities';
 import {
-  TypeOrmPasswordVaultRepository,
   TypeOrmBookEntityRepository,
+  TypeOrmPasswordVaultRepository,
   TypeOrmUserEntityRepository,
 } from './repositories';
+import { TypeOrmConfigurationFactory } from './typeorm.configuration';
 
 const entities = [BookEntity, UserEntity, PasswordVaultEntity];
 const repositories = [

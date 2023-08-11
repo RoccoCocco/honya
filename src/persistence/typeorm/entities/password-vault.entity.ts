@@ -1,4 +1,5 @@
-import { Entity, Column, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+
 import { UserEntity } from '../entities';
 
 const USER_ID_COLUMN_NAME = 'id';
