@@ -1,4 +1,5 @@
 import {
+  AuthenticationSignUpDto,
   User,
   UserDto,
   UserListDto,
@@ -9,6 +10,10 @@ import {
 import { plainToClass } from 'class-transformer';
 
 export class UserFactory {
+  signUp(dto: AuthenticationSignUpDto) {
+    return plainToClass(User, dto);
+  }
+
   create(dto: UserCreateDto): User {
     return plainToClass(User, dto);
   }

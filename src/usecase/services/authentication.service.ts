@@ -1,14 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { hash, compare } from 'bcrypt';
 import { validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import {
   AuthenticationSignInDto,
+  AuthenticationSignUpDto,
   AuthenticationSignInResponseDto,
   IDataService,
   AuthenticatedUserDto,
   Unauthorized,
+  UserRoleEnum,
+  UserStatusEnum,
 } from '@/core';
+import { UserFactory } from '../factories';
 import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()
@@ -19,6 +24,18 @@ export class AuthenticationService {
     private jwtService: JwtService,
   ) {}
 
+  async signUp(signUpDto: AuthenticationSignUpDto): Promise<void> {
+    const user = new UserFactory().signUp(signUpDto);
+
+    user.role = UserRoleEnum.Author;
+    user.status = UserStatusEnum.Active;
+
+    const userId = await this.dataService.user.create(user);
+    const passwordHash = await hash(signUpDto.password, 10);
+
+    await this.dataService.passwordVault.create({ id: userId, passwordHash });
+  }
+
   async signIn(
     signInDto: AuthenticationSignInDto,
   ): Promise<AuthenticationSignInResponseDto> {
@@ -27,6 +44,17 @@ export class AuthenticationService {
     );
 
     if (!user) {
+      throw new Unauthorized();
+    }
+
+    const passwordVault = await this.dataService.passwordVault.getById(user.id);
+
+    const matches = await compare(
+      signInDto.password,
+      passwordVault.passwordHash,
+    );
+
+    if (matches === false) {
       throw new Unauthorized();
     }
 

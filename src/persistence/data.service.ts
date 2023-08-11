@@ -1,22 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { IDataService, IBookRepository, IUserRepository } from '@/core';
+import { IDataService } from '@/core';
 
 import {
   TypeOrmBookEntityRepository,
   TypeOrmUserEntityRepository,
+  TypeOrmPasswordVaultRepository,
 } from './typeorm';
 
 @Injectable()
 export class DataService implements IDataService {
-  book: IBookRepository;
-
-  user: IUserRepository;
-
   constructor(
-    book: TypeOrmBookEntityRepository,
-    user: TypeOrmUserEntityRepository,
-  ) {
-    this.book = book;
-    this.user = user;
-  }
+    readonly book: TypeOrmBookEntityRepository,
+    readonly user: TypeOrmUserEntityRepository,
+    readonly passwordVault: TypeOrmPasswordVaultRepository,
+  ) {}
 }
