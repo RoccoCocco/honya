@@ -11,7 +11,6 @@ import {
 import {
   ApiTags,
   ApiOkResponse,
-  ApiUnauthorizedResponse,
   ApiNoContentResponse,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
@@ -23,7 +22,6 @@ import {
   UserListDto,
 } from '@/core';
 import { UserService } from '@/usecase';
-import { ExceptionDto } from '../dto';
 import {
   AuthenticatedUser,
   UseUserAuthentication,
@@ -32,7 +30,6 @@ import {
 
 @ApiTags('Users')
 @Controller('/users')
-@ApiUnauthorizedResponse({ type: ExceptionDto })
 @UseUserAuthentication()
 @CatchSerializeAndValidate()
 export class UserController {
