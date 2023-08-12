@@ -41,5 +41,5 @@ jobs:
     steps:
       - name: Webhook
         uses: distributhor/workflow-webhook@v3
-        with:
-          url: ${{ secrets.RENDER_DEPLOY_WEBHOOK }}
+        env:
+          webhook_url: ${{ secrets.RENDER_DEPLOY_WEBHOOK }}
