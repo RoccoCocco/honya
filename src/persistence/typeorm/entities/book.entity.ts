@@ -1,8 +1,16 @@
 import { faker } from '@faker-js/faker';
 import { Factory } from 'nestjs-seeder';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { Book } from '../../../core';
+import { UserEntity } from '../entities';
+const AUTHOR_ID_COLUMN_NAME = 'author_id';
 
 @Entity({ name: 'books' })
 export class BookEntity implements Book {
@@ -10,7 +18,7 @@ export class BookEntity implements Book {
   @Factory(() => faker.string.uuid())
   id!: string;
 
-  @Column('uuid')
+  @Column('uuid', { name: AUTHOR_ID_COLUMN_NAME })
   @Factory(() => faker.string.uuid())
   authorId!: string;
 
@@ -21,4 +29,11 @@ export class BookEntity implements Book {
   @Column('text')
   @Factory(() => faker.lorem.sentence({ min: 20, max: 100 }))
   title!: string;
+
+  @ManyToOne(() => UserEntity, { onDelete: 'CASCADE' })
+  @JoinColumn({
+    name: AUTHOR_ID_COLUMN_NAME,
+    foreignKeyConstraintName: 'FK_book_to_user',
+  })
+  author!: UserEntity;
 }
