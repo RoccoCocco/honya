@@ -4,8 +4,10 @@ import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 import { User, UserRoleEnum, UserStatusEnum } from '../../../core';
 
+export const UQ_USERNAME = 'UQ_user_username';
+
 @Entity({ name: 'users' })
-@Unique('UQ_user_username', ['username'])
+@Unique(UQ_USERNAME, ['username'])
 export class UserEntity implements User {
   @PrimaryGeneratedColumn('uuid', { primaryKeyConstraintName: 'PK_user_id' })
   @Factory(() => faker.string.uuid())

@@ -10,6 +10,7 @@ import {
   BookQueryDto,
   BookUpdateDto,
   IDataService,
+  NotFoundFactory,
 } from '@/core';
 
 import { BookDtoFactory, BookFactory } from '../factories';
@@ -24,6 +25,11 @@ export class BookService {
 
   async get(id: string): Promise<BookDto> {
     const book = await this.dataService.book.getById(id);
+
+    if (book === null) {
+      throw NotFoundFactory.forResource({ type: 'book', id });
+    }
+
     return BookDtoFactory.toDto(book);
   }
 
@@ -48,8 +54,12 @@ export class BookService {
 
   async delete(requester: AuthenticatedUserDto, id: string): Promise<void> {
     const book = await this.dataService.book.getById(id);
-    new BookPermission(requester).canDelete(book);
 
+    if (book === null) {
+      throw NotFoundFactory.forResource({ type: 'book', id });
+    }
+
+    new BookPermission(requester).canDelete(book);
     await this.dataService.book.delete(id);
   }
 
@@ -61,6 +71,10 @@ export class BookService {
     await validateOrReject(dto);
 
     const book = await this.dataService.book.getById(requester.id);
+
+    if (book === null) {
+      throw NotFoundFactory.forResource({ type: 'book', id });
+    }
 
     new BookPermission(requester).canUpdate(book);
 

@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { QueryFailedError, Repository } from 'typeorm';
 
-import { IUserRepository, QueryOptions, User, UserList } from '@/core';
+import {
+  ConflictExceptionFactory,
+  IUserRepository,
+  QueryOptions,
+  User,
+  UserList,
+} from '@/core';
 
-import { UserEntity } from '../entities';
+import { UQ_USERNAME, UserEntity } from '../entities';
 
 @Injectable()
 export class TypeOrmUserEntityRepository implements IUserRepository {
@@ -15,7 +21,7 @@ export class TypeOrmUserEntityRepository implements IUserRepository {
 
   async create(data: User) {
     const userEntity = this.repository.create(data);
-    await this.repository.save(userEntity, { reload: true });
+    await this.handleError(this.repository.save(userEntity, { reload: true }));
 
     return userEntity.id;
   }
@@ -29,7 +35,7 @@ export class TypeOrmUserEntityRepository implements IUserRepository {
   }
 
   async getById(id: string) {
-    return this.repository.findOneOrFail({ where: { id } });
+    return this.repository.findOne({ where: { id } });
   }
 
   async getAll(queryOptions?: QueryOptions<User>): Promise<UserList> {
@@ -49,5 +55,17 @@ export class TypeOrmUserEntityRepository implements IUserRepository {
 
   async getOneByUsername(username: string): Promise<User | null> {
     return this.repository.findOne({ where: { username } });
+  }
+
+  async handleError<T>(promise: Promise<T>): Promise<T> {
+    return promise.catch((error) => {
+      if (
+        error instanceof QueryFailedError &&
+        error.message.includes(UQ_USERNAME)
+      ) {
+        throw ConflictExceptionFactory.usernameTaken();
+      }
+      throw error;
+    });
   }
 }

@@ -29,7 +29,7 @@ export class TypeOrmBookEntityRepository implements IBookRepository {
   }
 
   async getById(id: string) {
-    return this.repository.findOneOrFail({ where: { id } });
+    return this.repository.findOne({ where: { id } });
   }
 
   async getAll(queryOptions?: QueryOptions<Book>): Promise<BookList> {

@@ -52,6 +52,10 @@ export class AuthenticationService {
 
     const passwordVault = await this.dataService.passwordVault.getById(user.id);
 
+    if (!passwordVault) {
+      throw new Unauthorized();
+    }
+
     const matches = await compare(
       signInDto.password,
       passwordVault.passwordHash,

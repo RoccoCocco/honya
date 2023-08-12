@@ -30,8 +30,8 @@ export class TypeOrmPasswordVaultRepository
     throw new Error('Not implemented');
   }
 
-  async getById(id: string): Promise<PasswordVault> {
-    return this.repository.findOneOrFail({ where: { id } });
+  async getById(id: string) {
+    return this.repository.findOne({ where: { id } });
   }
 
   async getAll(): Promise<never> {

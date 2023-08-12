@@ -5,6 +5,7 @@ import { validateOrReject } from 'class-validator';
 import {
   AuthenticatedUserDto,
   IDataService,
+  NotFoundFactory,
   UserCreateDto,
   UserDto,
   UserListDto,
@@ -25,6 +26,10 @@ export class UserService {
 
   async get(id: string): Promise<UserDto> {
     const user = await this.repository.user.getById(id);
+
+    if (user === null) {
+      throw NotFoundFactory.forResource({ type: 'user', id });
+    }
 
     return UserDtoFactory.toDto(user);
   }
@@ -49,6 +54,11 @@ export class UserService {
 
   async delete(requester: AuthenticatedUserDto, id: string): Promise<void> {
     const user = await this.repository.user.getById(id);
+
+    if (user === null) {
+      throw NotFoundFactory.forResource({ type: 'user', id });
+    }
+
     new UserPermission(requester).canDelete(user);
     await this.repository.user.delete(id);
   }

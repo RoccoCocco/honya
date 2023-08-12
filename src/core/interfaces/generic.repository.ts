@@ -16,7 +16,7 @@ export interface IGenericRepository<T> {
 
   getAll(queryOptions?: QueryOptions<T>): Promise<GenericList<T>>;
 
-  getById(id: string): Promise<T>;
+  getById(id: string): Promise<T | null>;
 
   update(id: string, data: Partial<T>): Promise<void>;
 }
