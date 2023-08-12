@@ -33,3 +33,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commit-message: 'ci: bump version to {{version}} [skip ci]'
+  trigger-deploy-webhook:
+    name: 'Trigger deploy'
+    runs-on: ubuntu-latest
+    needs: [bump-version]
+    steps:
+      - name: Webhook
+        uses: distributhor/workflow-webhook@v3
+        with:
+          url: ${{ secrets.AZURE_CREDENTIALS }}
