@@ -67,7 +67,6 @@ describe(UserPermission.name, () => {
   describe('canUpdate', () => {
     it('can update if self', () => {
       const user = UserDtoMockFactory.makeAdminUser();
-      user.role = UserRoleEnum.Author;
 
       expect(() =>
         new UserPermission(user).canUpdate(user.id, user),

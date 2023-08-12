@@ -18,9 +18,6 @@ import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()
 export class UserService {
-  private readonly factory = new UserFactory();
-  private readonly dtoFactory = new UserDtoFactory();
-
   constructor(
     @Inject(DATA_SERVICE)
     private readonly repository: IDataService,
@@ -29,15 +26,15 @@ export class UserService {
   async get(id: string): Promise<UserDto> {
     const user = await this.repository.user.getById(id);
 
-    return this.dtoFactory.toDto(user);
+    return UserDtoFactory.toDto(user);
   }
 
   async getAll(dto?: UserQueryDto): Promise<UserListDto> {
     const users = await this.repository.user.getAll(
-      dto && this.factory.query(dto),
+      dto && UserFactory.query(dto),
     );
 
-    return this.dtoFactory.toDto(users);
+    return UserDtoFactory.toDto(users);
   }
 
   async create(
@@ -46,7 +43,7 @@ export class UserService {
   ): Promise<void> {
     await validateOrReject(dto);
     new UserPermission(requester).canCreate();
-    const user = this.factory.create(dto);
+    const user = UserFactory.create(dto);
     await this.repository.user.create(user);
   }
 
@@ -63,7 +60,7 @@ export class UserService {
   ): Promise<void> {
     dto = plainToClass(UserUpdateDto, dto);
     await validateOrReject(dto);
-    const updateData = this.factory.update(dto);
+    const updateData = UserFactory.update(dto);
     new UserPermission(requester).canUpdate(id, updateData);
     await this.repository.user.update(id, updateData);
   }

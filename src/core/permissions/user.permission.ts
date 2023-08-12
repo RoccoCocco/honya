@@ -24,16 +24,20 @@ export class UserPermission {
   }
 
   canUpdate(id: string, updateData: Partial<User>): void {
-    if (this.isAdmin() === true) {
-      if (updateData.status !== undefined) {
-        throw ForbiddenExceptionFactory.notOwner();
-      }
-    }
-
-    if (this.isSelf(id) === true) {
-      if (updateData.role !== undefined) {
+    if (this.isSelf(id)) {
+      if (updateData.role !== undefined && !this.isAdmin()) {
         throw ForbiddenExceptionFactory.notAdmin();
       }
+
+      return;
+    }
+
+    if (this.isAdmin() === false) {
+      throw ForbiddenExceptionFactory.notAdmin();
+    }
+
+    if (updateData.status !== undefined) {
+      throw ForbiddenExceptionFactory.notOwner();
     }
   }
 

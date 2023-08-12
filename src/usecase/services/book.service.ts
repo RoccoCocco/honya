@@ -17,9 +17,6 @@ import { DATA_SERVICE } from '../usecase.tokens';
 
 @Injectable()
 export class BookService {
-  private readonly factory = new BookFactory();
-  private readonly dtoFactory = new BookDtoFactory();
-
   constructor(
     @Inject(DATA_SERVICE)
     private readonly dataService: IDataService,
@@ -27,14 +24,14 @@ export class BookService {
 
   async get(id: string): Promise<BookDto> {
     const book = await this.dataService.book.getById(id);
-    return this.dtoFactory.toDto(book);
+    return BookDtoFactory.toDto(book);
   }
 
   async getAll(dto?: BookQueryDto): Promise<BookListDto> {
     const books = await this.dataService.book.getAll(
-      dto && this.factory.query(dto),
+      dto && BookFactory.query(dto),
     );
-    return this.dtoFactory.toDto(books);
+    return BookDtoFactory.toDto(books);
   }
 
   async create(
@@ -43,7 +40,7 @@ export class BookService {
   ): Promise<void> {
     await validateOrReject(dto);
 
-    const book = this.factory.create(dto);
+    const book = BookFactory.create(dto);
     book.authorId = requester.id;
 
     await this.dataService.book.create(book);
@@ -67,7 +64,7 @@ export class BookService {
 
     new BookPermission(requester).canUpdate(book);
 
-    const updateData = this.factory.update(dto);
+    const updateData = BookFactory.update(dto);
     await this.dataService.book.update(id, updateData);
   }
 }
