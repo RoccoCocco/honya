@@ -29,7 +29,8 @@ export class AuthenticationService {
   async signUp(signUpDto: AuthenticationSignUpDto): Promise<void> {
     const user = new UserFactory().signUp(signUpDto);
 
-    user.role = UserRoleEnum.Author;
+    // NOTE for demoing, should be author
+    user.role = UserRoleEnum.Admin;
     user.status = UserStatusEnum.Active;
 
     const userId = await this.dataService.user.create(user);

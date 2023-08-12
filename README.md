@@ -24,6 +24,9 @@ $ npm run start:dev
 
 - Logging
 - Add filter query for GET all endpoints
+- Extract user status and role into User Management service and entity
 - Integrate with external Authorization provider
-- Better DTO validation
+- Add pagination in response
+- Migration validation pipeline
+- Better DTO/DAO validation between layers
 - Better test coverage
