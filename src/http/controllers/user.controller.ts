@@ -40,12 +40,12 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({ type: UserDto })
   async create(
     @Body() dto: UserCreateDto,
     @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
-  ): Promise<void> {
-    await this.userService.create(authenticatedUser, dto);
+  ): Promise<UserDto> {
+    return this.userService.create(authenticatedUser, dto);
   }
 
   @Delete(':id')

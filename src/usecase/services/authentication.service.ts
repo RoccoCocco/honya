@@ -33,10 +33,13 @@ export class AuthenticationService {
     user.role = UserRoleEnum.Admin;
     user.status = UserStatusEnum.Active;
 
-    const userId = await this.dataService.user.create(user);
+    const createdUser = await this.dataService.user.create(user);
     const passwordHash = await hash(signUpDto.password, 10);
 
-    await this.dataService.passwordVault.create({ id: userId, passwordHash });
+    await this.dataService.passwordVault.create({
+      id: createdUser.id,
+      passwordHash,
+    });
   }
 
   async signIn(

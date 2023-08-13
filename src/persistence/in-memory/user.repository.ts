@@ -1,34 +1,16 @@
-import {
-  GenericList,
-  IUserRepository,
-  NotFoundFactory,
-  User,
-  UserRoleEnum,
-  UserStatusEnum,
-} from '@/core';
+import { GenericList, IUserRepository, NotFoundFactory, User } from '@/core';
 
 export class InMemoryUserRepository implements IUserRepository {
   private readonly memory = new Map<string, User>();
 
-  constructor() {
-    const user = new User();
+  constructor() {}
 
-    user.firstName = 'Dummy';
-    user.lastName = 'Dummy';
-    user.username = 'dummy';
-    user.role = UserRoleEnum.Admin;
-    user.status = UserStatusEnum.Active;
-    user.id = '1f58632e-fd2f-4e77-81b9-fb28d5f109ef';
-
-    this.memory.set(user.id, user);
-  }
-
-  async create(user: User): Promise<string> {
+  async create(user: User) {
     user.id = '093411d6-0a07-4f33-a87b-c6287c6b4f41';
 
     this.memory.set(user.id, user);
 
-    return user.id;
+    return user;
   }
 
   async delete(id: string) {

@@ -43,13 +43,15 @@ export class BookService {
   async create(
     requester: AuthenticatedUserDto,
     dto: BookCreateDto,
-  ): Promise<void> {
+  ): Promise<BookDto> {
     await validateOrReject(dto);
 
     const book = BookFactory.create(dto);
     book.authorId = requester.id;
 
-    await this.dataService.book.create(book);
+    const createdBook = await this.dataService.book.create(book);
+
+    return BookDtoFactory.toDto(createdBook);
   }
 
   async delete(requester: AuthenticatedUserDto, id: string): Promise<void> {

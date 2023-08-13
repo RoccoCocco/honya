@@ -45,11 +45,13 @@ export class UserService {
   async create(
     requester: AuthenticatedUserDto,
     dto: UserCreateDto,
-  ): Promise<void> {
+  ): Promise<UserDto> {
     await validateOrReject(dto);
     new UserPermission(requester).canCreate();
-    const user = UserFactory.create(dto);
-    await this.repository.user.create(user);
+
+    const user = await this.repository.user.create(UserFactory.create(dto));
+
+    return UserDtoFactory.toDto(user);
   }
 
   async delete(requester: AuthenticatedUserDto, id: string): Promise<void> {

@@ -40,12 +40,12 @@ export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   @Post()
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({ type: BookDto })
   async create(
     @Body() dto: BookCreateDto,
     @AuthenticatedUser() authenticatedUser: AuthenticatedUserDto,
-  ): Promise<void> {
-    await this.bookService.create(authenticatedUser, dto);
+  ): Promise<BookDto> {
+    return this.bookService.create(authenticatedUser, dto);
   }
 
   @Delete(':id')

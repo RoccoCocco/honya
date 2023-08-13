@@ -19,7 +19,7 @@ export class TypeOrmPasswordVaultRepository
     const entity = this.repository.create(data);
     await this.repository.save(entity, { reload: true });
 
-    return entity.id;
+    return entity;
   }
 
   async delete() {

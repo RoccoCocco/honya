@@ -14,7 +14,7 @@ export type QueryOptions<T> = {
 };
 
 export interface IGenericRepository<T> {
-  create(data: T): Promise<string>;
+  create(data: T): Promise<T>;
 
   delete(id: string): Promise<void>;
 

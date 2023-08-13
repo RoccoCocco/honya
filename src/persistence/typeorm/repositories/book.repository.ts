@@ -18,7 +18,7 @@ export class TypeOrmBookEntityRepository implements IBookRepository {
     const userEntity = this.repository.create(data);
     await this.repository.save(userEntity, { reload: true });
 
-    return userEntity.id;
+    return userEntity;
   }
 
   async delete(id: string) {

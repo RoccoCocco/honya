@@ -3,12 +3,12 @@ import { Book, GenericList, IBookRepository, NotFoundFactory } from '@/core';
 export class InMemoryBookRepository implements IBookRepository {
   private readonly memory = new Map<string, Book>();
 
-  async create(user: Book): Promise<string> {
-    const id = new Date().getTime().toString();
+  async create(book: Book) {
+    book.id = new Date().getTime().toString();
 
-    this.memory.set(id, user);
+    this.memory.set(book.id, book);
 
-    return id;
+    return book;
   }
 
   async delete(id: string) {
@@ -16,10 +16,10 @@ export class InMemoryBookRepository implements IBookRepository {
   }
 
   async update(id: string, data: Partial<Book>) {
-    const user = this.memory.get(id);
+    const book = this.memory.get(id);
 
-    if (user) {
-      this.memory.set(id, { ...user, ...data });
+    if (book) {
+      this.memory.set(id, { ...book, ...data });
     }
   }
 
