@@ -10,7 +10,7 @@ import {
   Unauthorized,
 } from '@/core';
 
-import { DATA_SERVICE } from '../usecase.tokens';
+import { DATA_SERVICE, JWT_SECRET_PROVIDER } from '../usecase.tokens';
 import { AuthenticationService } from './authentication.service';
 
 const DataServiceMock = {
@@ -38,6 +38,10 @@ describe(AuthenticationService.name, () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         { provide: DATA_SERVICE, useValue: DataServiceMock },
+        {
+          provide: JWT_SECRET_PROVIDER,
+          useValue: faker.string.alphanumeric(30),
+        },
         { provide: JwtService, useValue: JwtServiceMock },
         AuthenticationService,
       ],
