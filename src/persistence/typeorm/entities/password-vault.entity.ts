@@ -1,11 +1,13 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 
+import { PasswordVault } from '@/core';
+
 import { UserEntity } from '../entities';
 
 const USER_ID_COLUMN_NAME = 'id';
 
 @Entity({ name: 'password_vault' })
-export class PasswordVaultEntity {
+export class PasswordVaultEntity implements PasswordVault {
   @Column()
   @PrimaryColumn({
     name: USER_ID_COLUMN_NAME,

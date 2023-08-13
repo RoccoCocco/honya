@@ -8,7 +8,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Book } from '../../../core';
+import { Book } from '@/core';
+
 import { UserEntity } from '../entities';
 const AUTHOR_ID_COLUMN_NAME = 'author_id';
 

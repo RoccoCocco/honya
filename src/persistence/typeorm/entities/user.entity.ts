@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Factory } from 'nestjs-seeder';
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
-import { User, UserRoleEnum, UserStatusEnum } from '../../../core';
+import { User, UserRoleEnum, UserStatusEnum } from '@/core';
 
 export const UQ_USERNAME = 'UQ_user_username';
 

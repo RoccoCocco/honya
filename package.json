@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:up": "docker-compose up",
     "docker:up:app": "docker-compose --profile app up --build",
-    "typeorm:seed": "npx ts-node src/persistence/typeorm/typeorm.seeder.ts",
+    "typeorm:seed": "npx ts-node --project . src/persistence/typeorm/typeorm.seeder.ts",
     "typeorm:migration:generate": "env-cmd typeorm-ts-node-commonjs migration:generate -d src/persistence/typeorm/typeorm.datasource.ts src/persistence/typeorm/migrations/migration",
     "typeorm:migration:run": "env-cmd typeorm-ts-node-commonjs migration:run -d src/persistence/typeorm/typeorm.datasource.ts",
     "typeorm:migration:run:ci": "typeorm migration:run -d dist/persistence/typeorm/typeorm.datasource.js",
