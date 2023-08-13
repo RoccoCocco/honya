@@ -2,11 +2,15 @@ export interface GenericList<D> {
   items: Array<D>;
 }
 
+export const sortOrderValues = ['asc', 'desc'] as const;
+
+export type SortOrder = (typeof sortOrderValues)[number];
+
 export type QueryOptions<T> = {
   limit?: number;
   offset?: number;
   sortBy?: Extract<keyof T, string>;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: SortOrder;
 };
 
 export interface IGenericRepository<T> {

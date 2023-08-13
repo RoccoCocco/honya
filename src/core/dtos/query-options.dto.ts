@@ -2,13 +2,11 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, Max, Min } from 'class-validator';
 
-import { QueryOptions } from '../interfaces';
+import { QueryOptions, SortOrder, sortOrderValues } from '../interfaces';
 
 export const QueryOptionsDtoFactory = <D>(
   sortByKeys: Array<Extract<keyof D, string>>,
 ): new () => QueryOptions<D> => {
-  const sortOrderKeys: Array<QueryOptions<D>['sortOrder']> = ['asc', 'desc'];
-
   class Query implements QueryOptions<D> {
     @ApiProperty({ example: 10 })
     @IsInt()
@@ -26,9 +24,9 @@ export const QueryOptionsDtoFactory = <D>(
     @IsEnum(sortByKeys)
     sortBy?: (typeof sortByKeys)[number];
 
-    @ApiProperty({ enum: sortOrderKeys })
-    @IsEnum(sortOrderKeys)
-    sortOrder?: (typeof sortOrderKeys)[number];
+    @ApiProperty({ enum: sortOrderValues })
+    @IsEnum(sortOrderValues)
+    sortOrder?: SortOrder;
   }
 
   return PartialType(Query);
