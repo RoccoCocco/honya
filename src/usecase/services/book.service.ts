@@ -40,6 +40,15 @@ export class BookService {
     return BookDtoFactory.toDto(books);
   }
 
+  async getAllByAuthor(authorId: string, dto?: BookQueryDto) {
+    const books = await this.dataService.book.getAllByAuthor(
+      authorId,
+      dto && BookFactory.query(dto),
+    );
+
+    return BookDtoFactory.toDto(books);
+  }
+
   async create(
     requester: AuthenticatedUserDto,
     dto: BookCreateDto,

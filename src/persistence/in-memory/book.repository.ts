@@ -27,6 +27,14 @@ export class InMemoryBookRepository implements IBookRepository {
     return { items: Array.from(this.memory.values()) };
   }
 
+  async getAllByAuthor(authorId: string): Promise<GenericList<Book>> {
+    return {
+      items: Array.from(this.memory.values()).filter(
+        (item) => item.authorId === authorId,
+      ),
+    };
+  }
+
   async getById(id: string): Promise<Book> {
     const book = this.memory.get(id);
 

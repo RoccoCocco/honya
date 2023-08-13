@@ -34,9 +34,27 @@ export class TypeOrmBookEntityRepository implements IBookRepository {
   }
 
   async getAll(queryOptions?: QueryOptions<Book>): Promise<BookList> {
-    const items = await this.repository.find(
+    const bookList = new BookList();
+
+    bookList.items = await this.repository.find(
       QueryFactory.findManyQuery(queryOptions),
     );
-    return { items };
+
+    return bookList;
+  }
+
+  async getAllByAuthor(
+    authorId: string,
+    queryOptions?: QueryOptions<Book>,
+  ): Promise<BookList> {
+    const query = QueryFactory.findManyQuery(queryOptions, {
+      where: { authorId },
+    });
+
+    const bookList = new BookList();
+
+    bookList.items = await this.repository.find(query);
+
+    return bookList;
   }
 }

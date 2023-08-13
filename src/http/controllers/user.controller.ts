@@ -18,13 +18,15 @@ import {
 
 import {
   AuthenticatedUserDto,
+  BookListDto,
+  BookQueryDto,
   UserCreateDto,
   UserDto,
   UserListDto,
   UserQueryDto,
   UserUpdateDto,
 } from '@/core';
-import { UserService } from '@/usecase';
+import { BookService, UserService } from '@/usecase';
 
 import {
   AuthenticatedUser,
@@ -37,7 +39,10 @@ import {
 @UseUserAuthentication()
 @CatchSerializeAndValidate()
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly bookService: BookService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post()
   @ApiCreatedResponse({ type: UserDto })
@@ -71,6 +76,15 @@ export class UserController {
   @ApiOkResponse({ type: UserDto })
   async get(@Param('id', ParseUUIDPipe) id: string): Promise<UserDto> {
     return this.userService.get(id);
+  }
+
+  @Get(':id/books')
+  @ApiOkResponse({ type: UserDto })
+  async getBooksForUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query() query: BookQueryDto,
+  ): Promise<BookListDto> {
+    return this.bookService.getAllByAuthor(id, query);
   }
 
   @Get()
