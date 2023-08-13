@@ -48,8 +48,10 @@ describe(UserService.name, () => {
 
   describe('create', () => {
     it('should create', async () => {
+      DataServiceMock.user.create.mockResolvedValueOnce(new User());
       const userDataMock = UserDtoMockFactory.makeAdminUser();
-      expect(await service.create(userDataMock, userDataMock)).toBeUndefined();
+      const user = await service.create(userDataMock, userDataMock);
+      expect(user).toBeInstanceOf(UserDto);
     });
   });
 

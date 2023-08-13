@@ -48,9 +48,11 @@ describe(BookService.name, () => {
 
   describe('create', () => {
     it('should create', async () => {
+      DataServiceMock.book.create.mockResolvedValueOnce(new Book());
       const bookDataMock = BookDtoMockFactory.makeAdminBook();
       const userDataMock = UserDtoMockFactory.makeAdminUser();
-      expect(await service.create(userDataMock, bookDataMock)).toBeUndefined();
+      const book = await service.create(userDataMock, bookDataMock);
+      expect(book).toBeInstanceOf(BookDto);
     });
   });
 
