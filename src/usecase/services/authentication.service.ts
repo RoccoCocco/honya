@@ -16,13 +16,15 @@ import {
 } from '@/core';
 
 import { UserFactory } from '../factories';
-import { DATA_SERVICE } from '../usecase.tokens';
+import { JwtSecret } from '../usecase.module';
+import { DATA_SERVICE, JWT_SECRET_PROVIDER } from '../usecase.tokens';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     @Inject(DATA_SERVICE)
     private readonly dataService: IDataService,
+    @Inject(JWT_SECRET_PROVIDER) private readonly jwtSecret: JwtSecret,
     private jwtService: JwtService,
   ) {}
 
@@ -82,7 +84,7 @@ export class AuthenticationService {
 
   async verify(token: string) {
     const data = await this.jwtService.verifyAsync(token, {
-      secret: 'static-secret',
+      secret: this.jwtSecret,
     });
 
     const dto = plainToClass(AuthenticatedUserDto, data);
