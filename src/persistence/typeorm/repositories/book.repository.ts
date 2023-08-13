@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Book, BookList, IBookRepository, QueryOptions } from '@/core';
 
 import { BookEntity } from '../entities';
+import { QueryFactory } from '../factories';
 
 @Injectable()
 export class TypeOrmBookEntityRepository implements IBookRepository {
@@ -34,15 +35,7 @@ export class TypeOrmBookEntityRepository implements IBookRepository {
 
   async getAll(queryOptions?: QueryOptions<Book>): Promise<BookList> {
     const items = await this.repository.find(
-      queryOptions && {
-        take: queryOptions.limit,
-        skip: queryOptions.offset,
-        order: {
-          ...(queryOptions.sortBy && {
-            [queryOptions.sortBy]: queryOptions.sortOrder ?? 'asc',
-          }),
-        },
-      },
+      QueryFactory.findManyQuery(queryOptions),
     );
     return { items };
   }

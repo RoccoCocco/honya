@@ -11,6 +11,7 @@ import {
 } from '@/core';
 
 import { UQ_USERNAME, UserEntity } from '../entities';
+import { QueryFactory } from '../factories';
 
 @Injectable()
 export class TypeOrmUserEntityRepository implements IUserRepository {
@@ -40,15 +41,7 @@ export class TypeOrmUserEntityRepository implements IUserRepository {
 
   async getAll(queryOptions?: QueryOptions<User>): Promise<UserList> {
     const items = await this.repository.find(
-      queryOptions && {
-        take: queryOptions.limit,
-        skip: queryOptions.offset,
-        order: {
-          ...(queryOptions.sortBy && {
-            [queryOptions.sortBy]: queryOptions.sortOrder ?? 'asc',
-          }),
-        },
-      },
+      QueryFactory.findManyQuery(queryOptions),
     );
     return { items };
   }
